@@ -26,7 +26,7 @@ class UserRequest extends FormRequest
     {
 
         return [
-            'email' => 'unique:users|regex:/^[A-Za-z0-9_.]*@gmail.com$/',
+            'email' => 'regex:/^[A-Za-z0-9_.]*@gmail.com$/',
         ];
     }
 
@@ -34,7 +34,6 @@ class UserRequest extends FormRequest
     {
         return [
             'email.regex' => 'Email không đúng định dạng',
-            'email.unique' => 'Email đã tồn tại',
         ];
     }
 

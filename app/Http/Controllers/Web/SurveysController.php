@@ -10,10 +10,10 @@ namespace App\Http\Controllers\Web;
 
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
-use App\Models\OpesDetail;
+use App\Models\JobUser;
 use App\Models\OpesStaff;
 use App\Models\User;
-use App\Models\Department;
+use App\Models\Business;
 use Illuminate\Http\Request;
 use App\Models\RequestStaffs;
 use phpDocumentor\Reflection\DocBlock;
@@ -32,10 +32,27 @@ class SurveysController extends AppController
 
     public function create()
     {
-        $users = User::showUser(Auth::id());
+        $user = User::showUser(Auth::id());
+        $business = Business::all();
         if(!empty($users['job_id'])) abort(404);
-        return view($this->dirView . 'create'); 
+        return view($this->dirView . 'create', compact('user','business')); 
     }   
+
+    public function store(Request $request)
+    {
+        User::updateUser($request['info'], Auth::id());
+        if($request['job']==JobUser::JOB){
+            $error = JobUser::checkCreateSurvey($request);
+            if(!empty($error)){
+                $user = User::showUser(Auth::id());
+                $business = Business::all();
+                if(!empty($users['job_id'])) abort(404);
+                return view($this->dirView . 'create', compact('user','business','error','request')); 
+            }
+        }
+        User::updateJobUser($request, Auth::id());
+        return redirect()->route('web.surveys.index');
+    }
 
     // Màn index của nhân viên dưới quyền
     public function manageOpes(Request $request)
@@ -74,84 +91,6 @@ class SurveysController extends AppController
         $opesDetails = OpesDetail::showOpesDetail($id);
         $opesStaffs = OpesStaff::showOpesStaff($id);
         return view($this->dirView . 'show', compact('id', 'opesDetails', 'opesStaffs'));
-    }
-
-    
-
-    public function store(Request $request)
-    {
-        // Check Opes không có bất kỳ dữ liệu gì
-        if ($request['opes'] == NULL) dd('Không có dữ liệu Opes');
-        //Lưu lại Opes chưa gửi
-        if ($_POST['action'] == 'save') {
-            if ($request['status'] == OpesStaff::STATUS_UPDATE_REVIEW_COMMENT) {
-                $idOpesStaffSaveNewest = $request['id'];
-                $checkOpesSave = 3;
-            } else {
-                $getIdOpesStaffSaveNewest = OpesStaff::saveAndCreateAndGetIdNewOpesStaff(OpesStaff::STATUS_CREATE_NEW_OPES, Auth::user()->id);
-                $idOpesStaffSaveNewest = $getIdOpesStaffSaveNewest[0]['id'];
-                $checkOpesSave = 1;
-            }
-            OpesDetail::createNewOpes($request, $idOpesStaffSaveNewest, Auth::user()->id);
-            // Lưu lại đổi trạng thái và gửi đi
-        } elseif ($_POST['action'] == 'create') {
-            $countTitle = array();
-            foreach ($request['opes'] as $key => $value) {
-                $countTitle[$key] = count($value);
-            }
-            $mark = OpesDetail::$mark;
-            // Check lỗi không có dữ liệu tiêu chí
-            $errorsIssetEval = OpesDetail::evaluaIssetCheck($request->all());
-            // Check dữ liệu để trống
-            $errorsNullEval = OpesDetail::evaluaNullCheck($request->all());
-            // Check lỗi trọng số
-            $evaluationFollowStaffId = Staff::getListEvaluationFollowStaffId(Auth::user()->id);
-            $error = OpesDetail::totalPercentsCheck($request->all(), $evaluationFollowStaffId);
-            if ($error || $errorsIssetEval || $errorsNullEval) {
-                if ($error == 0) {
-                    if ($errorsIssetEval == 0) {
-                        return view($this->dirView . 'create', compact('errorsNullEval', 'request', 'mark', 'evaluationFollowStaffId', 'countTitle'));
-                    } elseif ($errorsNullEval == 0) {
-                        return view($this->dirView . 'create', compact('errorsIssetEval', 'request', 'mark', 'evaluationFollowStaffId', 'countTitle'));
-                    } else {
-                        return view($this->dirView . 'create', compact('errorsNullEval', 'errorsIssetEval', 'request', 'mark', 'evaluationFollowStaffId', 'countTitle'));
-                    }
-                } elseif ($errorsIssetEval == 0) {
-                    if ($errorsNullEval == 0) {
-                        return view($this->dirView . 'create', compact('error', 'request', 'mark', 'evaluationFollowStaffId', 'countTitle'));
-                    } else {
-                        return view($this->dirView . 'create', compact('error', 'errorsNullEval', 'request', 'mark', 'evaluationFollowStaffId', 'countTitle'));
-                    }
-                } elseif ($errorsNullEval == 0) {
-                    return view($this->dirView . 'create', compact('error', 'errorsIssetEval', 'request', 'mark', 'evaluationFollowStaffId', 'countTitle'));
-                } else {
-                    return view($this->dirView . 'create', compact('error', 'errorsIssetEval', 'errorsNullEval', 'request', 'mark', 'evaluationFollowStaffId', 'countTitle'));
-                }
-            } else {
-                if ($request['status'] == OpesStaff::STATUS_UPDATE_REVIEW_COMMENT) {
-                    $getIdOpesStaffCreateNewest = OpesStaff::saveAndCreateAndGetIdNewOpesStaff($request['status'], Auth::user()->id);
-                    RequestStaffs::confirmUpdateOpes($request['id']);
-                    RequestStaffs::makeNewCreateOpesRequest(Auth::user()->id,$getIdOpesStaffCreateNewest[0]['id'],RequestStaffs::NOTE_RE_UPDATE_OPES);
-                    OpesDetail::createNewOpes($request, $getIdOpesStaffCreateNewest[0]['id'], Auth::user()->id);
-                } else {
-                    $getIdOpesStaffCreateNewest = OpesStaff::saveAndCreateAndGetIdNewOpesStaff(OpesStaff::STATUS_SEND_TO_REVIEW, Auth::user()->id);
-                    RequestStaffs::confirmRequestCreateNewOpes(Auth::user()->id);
-                    RequestStaffs::makeNewCreateOpesRequest(Auth::user()->id,$getIdOpesStaffCreateNewest[0]['id'],RequestStaffs::NOTE_CREATE_OPES);
-                    OpesDetail::createNewOpes($request, $getIdOpesStaffCreateNewest[0]['id'], Auth::user()->id);
-                }
-                $checkOpesSave = 0;
-            }
-        }
-        // Lấy danh sách opes của người đăng nhập
-        $request = array();
-        $myOpesStaffs = OpesStaff::getMyOpesStaff($request);
-        $timeNow = OpesStaff::getTimeNow();
-        // Lấy danh sách năm để tìm kiếm
-        for ($i = 2013; $i <= Carbon::now()->year; $i++) {
-            $years[] = $i;
-        }
-        Alert::success('Tạo Opes Thành Công');
-        return view($this->dirView . 'index', compact('checkOpesSave', 'myOpesStaffs', 'timeNow','years'));
     }
 
     public function update(Request $request, $idOpesStaff)

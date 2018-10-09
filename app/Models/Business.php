@@ -28,6 +28,10 @@ class Business extends AppModel
         return $departments;
     }
 
+    public static function getNameBusiness($businessId){
+        return self::select('business')->where('id',$businessId)->first();
+    }
+
     public static function createDepartment(array $data)
     {
         $dataSave['name'] = $data['name'];

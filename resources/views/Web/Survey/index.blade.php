@@ -19,7 +19,7 @@
                     <div class="card-body">
                         <!-- form start -->
                         <div class="box-body">
-                            @if(empty($users['job_id']))
+                            @if($users['job_id']==NULL||$users['job_id']==0)
                             <div class="box-footer" style="text-align: center;">
                                 <a class="btn btn-info" href="{{ route('web.surveys.create') }}" style="width: 500px; height: 70px; font-size: 40px ">BẮT ĐẦU KHẢO SÁT</a>
                             </div>

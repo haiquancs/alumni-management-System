@@ -48,13 +48,11 @@
                                 <div class="form-group row">
                                     <label for="inputEmail3" class="col-2 col-form-label">Giới tính :</label>
                                     <select class="form-control col-6" name="sex">
-                                        <option value="{{ $user->sex }}" selected>
-                                            @if($user->sex != NULL)
-                                            {{\App\Models\User::$sex[$user->sex]}}(Đã chọn)
-                                            @else
-                                            (Chưa cập nhật)
-                                            @endif
-                                        </option>
+                                        @if($user->sex != NULL)
+                                            <option value="{{ $user->sex }}" selected>{{\App\Models\User::$sex[$user->sex]}}(Đã chọn)</option>
+                                        @else
+                                            <option value="" selected>(Chưa cập nhật)</option>
+                                        @endif
                                         @foreach(\App\Models\User::$sex as $key => $sex)
                                             <option value="{{ $key }}">{{ \App\Models\User::$sex[$key] }}</option>
                                         @endforeach
@@ -71,14 +69,12 @@
                                 <div class="form-group row">
                                     <label for="inputEmail3" class="col-2 col-form-label">Thời gian tốt nghiệp</label>
                                     <select class="form-control col-6" name="graduation_year">
-                                        <option value="{{ $user->graduation_year }}" selected>
-                                            @if($user->graduation_year != NULL)
-                                            {{$user->graduation_year}}(Đã chọn)
-                                            @else
-                                            (Chưa cập nhật)
-                                            @endif
-                                        </option>
-                                        @for($year = 2000; $year <= 2018; $year++)
+                                        @if($user->graduation_year != NULL)
+                                        <option value="{{ $user->graduation_year }}" selected>{{$user->graduation_year}}(Đã chọn)</option>
+                                        @else
+                                        <option value="" selected>(Chưa cập nhật)</option>
+                                        @endif
+                                        @for($year = 2018; $year >= 2000; $year--)
                                             <option value="{{ $year }}">{{$year}}</option>
                                         @endfor
                                     </select>
@@ -86,20 +82,18 @@
                                 <div class="form-group row">
                                     <label for="inputEmail3" class="col-2 col-form-label">Chuyên ngành tốt nghiệp</label>
                                     <select class="form-control col-6" name="graduation_business">
-                                        <option value="{{ $user->graduation_business }}" selected>
-                                            @if($user->graduation_business != NULL)
-                                            {{$user->business['business']}}(Đã chọn)
-                                            @else
-                                            (Chưa cập nhật)
-                                            @endif
-                                        </option>
+                                        @if($user->graduation_business != NULL)
+                                        <option value="{{ $user->graduation_business }}" selected>{{$user->business['business']}}(Đã chọn)</option>
+                                        @else
+                                        <option value="" selected>(Chưa cập nhật)</option>
+                                        @endif
                                         @foreach($business as $key => $value)
                                             <option value="{{ $key+1 }}">{{$value['business']}}</option>
                                         @endforeach
                                     </select>
                                 </div>
                                 <div class="box-footer">
-                                    <a class="btn btn-default" href="{{ route('web.opes.index') }}">Trở lại</a>
+                                    <a class="btn btn-default" href="{{ route('web.surveys.index') }}">Trở lại</a>
                                     <button type="submit" class="btn btn-info">Sửa</button>
                                 </div>
                             </div>

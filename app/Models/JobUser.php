@@ -9,40 +9,73 @@ namespace App\Models;
 
 use Auth;
 
-class OpesDetail extends AppModel
+class JobUser extends AppModel
 {
-    const MARK_NULL = 0;
-    const MARK_S = 1;
-    const MARK_A = 2;
-    const MARK_B = 3;
-    const MARK_C = 4;
-    const MARK_D = 5;
+    const JOB = 1;
+    const UN_JOB = 2;
 
-    public static $mark = [
-        self::MARK_NULL => '-',
-        self::MARK_S => 'S',
-        self::MARK_A => 'A',
-        self::MARK_B => 'B',
-        self::MARK_C => 'C',
-        self::MARK_D => 'D',
+    public static $job = [
+        self::JOB => 'Có',
+        self::UN_JOB => 'Không',
     ];
 
-    protected $table = 'opes_details';
+    protected $table = 'job_users';
     protected $primaryKey = 'id';
     protected $fillable = [
-        'evaluation_criteria_id',
-        'opes_staff_id',
-        'title',
-        'content',
-        'percents',
-        's', 'a', 'b',
-        'c', 'd',
-        'mark',
-        'note_for_reviewer',
-        'note_for_creater',
+        'job',
+        'name_job',
+        'roll_job_id',
+        'type_company_id',
+        'traning',
+        'introduce_source',
+        'time_have_job',
+        'salary_id',
+        'job_business',
         'created_id',
         'updated_id',
         'deleted_id'];
+
+    public static function updateJobUser($data, $userId)
+    {
+        if($data['job']==self::UN_JOB){
+            self::where('id',$userId)->update(['job_id'=>$data['job']]);
+        }
+    }
+
+    public static function checkCreateSurvey($data){
+        // dd($data->toArray());
+        if($data['name_job']==NULL){
+            $errors['name_job'] = 'Bạn chưa điền tên công việc của bạn';
+        }
+        if(!@$data['time_have_job']){
+            $errors['time_have_job'] = 'Bạn chưa chọn trường này';
+        }
+        if($data['time_have_job']==5&&$data['time_have_job_else']==NUll){
+            $errors['time_have_job'] = 'Bạn chưa điền thời gian khác';
+        }
+        if(!@$data['type_company']){
+            $errors['type_company'] = 'Bạn chưa chọn trường này';
+        }
+        if($data['type_company']==1&&!@$data['agencies']){
+            $errors['type_company'] = 'Bạn chưa chọn Loại hình cơ quan Nhà nước';
+        }
+        if($data['type_company']==2&&!@$data['enterprise']){
+            $errors['type_company'] = 'Bạn chưa chọn Cơ quan/Doanh nghiệp';
+        }
+        if($data['type_company']==3&&!@$data['non_organizations']){
+            $errors['type_company'] = 'Bạn chưa chọn Tổ chức phi chính phủ';
+        }
+        if($data['type_company']==4&&$data['type_company_else']==NUll){
+            $errors['type_company'] = 'Bạn chưa điền loại hình khác';
+        }
+        if(!@$data['roll_job']){
+            $errors['roll_job'] = 'Bạn chưa chọn trường này';
+        }
+        if($data['roll_job']==5&&$data['roll_job_else']==NUll){
+            $errors['roll_job'] = 'Bạn chưa điền vị trí khác';
+        }
+        return $errors;
+    }
 
     public static function getOpesDetail()
     {
