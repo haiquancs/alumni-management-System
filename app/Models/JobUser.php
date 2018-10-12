@@ -14,9 +14,23 @@ class JobUser extends AppModel
     const JOB = 1;
     const UN_JOB = 2;
 
+    const TIME_JOB1 = 1;
+    const TIME_JOB2 = 2;
+    const TIME_JOB3 = 3;
+    const TIME_JOB4 = 4;
+    const TIME_JOB5 = 5;
+
     public static $job = [
         self::JOB => 'Có',
         self::UN_JOB => 'Không',
+    ];
+
+    public static $timeHaveJob = [
+        self::TIME_JOB1 => 'Có việc làm ngay',
+        self::TIME_JOB2 => 'Sau 1-6 tháng',
+        self::TIME_JOB3 => 'Sau 6-12 tháng',
+        self::TIME_JOB4 => 'Sau 12 tháng',
+        self::TIME_JOB5 => 'Khác',
     ];
 
     protected $table = 'job_users';
@@ -38,54 +52,63 @@ class JobUser extends AppModel
     public static function updateJobUser($data, $userId)
     {
         dd($data->toArray());
-        if($data['job']==self::UN_JOB){
+        if ($data['job'] == self::UN_JOB) {
             $job = array('job' => self::UN_JOB);
             $getIdJob = self::create($job)->pluck('id')->first();
         }
-        if($data['job']==self::JOB){
+        if ($data['job'] == self::JOB) {
             $job = array(
                 'job' => self::JOB,
                 'name_job' => $data['name_job'],
             );
+//            Tiếp tục các trường
+            if ($data['time_have_job'] == self::TIME_JOB5) {
+                $job['time_have_job'] == $data['time_have_job_else'];
+            } else {
+                $job['time_have_job'] == $data['time_have_job'];
+            }
+            if()
             $getIdJob = self::create($job)->pluck('id')->first();
         }
-        User::where('id',$userId)->update(['job_id' => $getIdJob]);
+        User::where('id', $userId)->update(['job_id' => $getIdJob]);
     }
 
-    public static function getJobInfoUsers($jobIdUser){
-        return self::where('id',$jobIdUser)->first();
+    public static function getJobInfoUsers($jobIdUser)
+    {
+        return self::where('id', $jobIdUser)->first();
     }
 
-    public static function checkCreateSurvey($data){
+    public static function checkCreateSurvey($data)
+    {
         $errors = array();
-        if($data['name_job']==NULL){
+        if ($data['name_job'] == NULL) {
             $errors['name_job'] = 'Bạn chưa điền tên công việc của bạn';
         }
-        if(!@$data['time_have_job']){
+        if (!@$data['time_have_job']) {
             $errors['time_have_job'] = 'Bạn chưa chọn trường này';
         }
-        if($data['time_have_job']==5&&$data['time_have_job_else']==NUll){
+        if ($data['time_have_job'] == 5 && $data['time_have_job_else'] == NUll) {
             $errors['time_have_job'] = 'Bạn chưa điền thời gian khác';
         }
-        if(!@$data['type_company']){
+        if (!@$data['type_company']) {
             $errors['type_company'] = 'Bạn chưa chọn trường này';
         }
-        if($data['type_company']==1&&!@$data['agencies']){
+        if ($data['type_company'] == 1 && !@$data['agencies']) {
             $errors['type_company'] = 'Bạn chưa chọn Loại hình cơ quan Nhà nước';
         }
-        if($data['type_company']==2&&!@$data['enterprise']){
+        if ($data['type_company'] == 2 && !@$data['enterprise']) {
             $errors['type_company'] = 'Bạn chưa chọn Cơ quan/Doanh nghiệp';
         }
-        if($data['type_company']==3&&!@$data['non_organizations']){
+        if ($data['type_company'] == 3 && !@$data['non_organizations']) {
             $errors['type_company'] = 'Bạn chưa chọn Tổ chức phi chính phủ';
         }
-        if($data['type_company']==4&&$data['type_company_else']==NUll){
+        if ($data['type_company'] == 4 && $data['type_company_else'] == NUll) {
             $errors['type_company'] = 'Bạn chưa điền loại hình khác';
         }
-        if(!@$data['roll_job']){
+        if (!@$data['roll_job']) {
             $errors['roll_job'] = 'Bạn chưa chọn trường này';
         }
-        if($data['roll_job']==5&&$data['roll_job_else']==NUll){
+        if ($data['roll_job'] == 5 && $data['roll_job_else'] == NUll) {
             $errors['roll_job'] = 'Bạn chưa điền vị trí khác';
         }
         return $errors;
@@ -269,7 +292,8 @@ class JobUser extends AppModel
         }
     }
 
-    public static function createOpes($evaluationCriteriaId, $opesStaffId, array $data, $mark, $noteForReviewer, $noteForCreater){
+    public static function createOpes($evaluationCriteriaId, $opesStaffId, array $data, $mark, $noteForReviewer, $noteForCreater)
+    {
         $oneTitleOneEvaluaStaffId = array(
             'evaluation_criteria_id' => $evaluationCriteriaId,
             'opes_staff_id' => $opesStaffId,

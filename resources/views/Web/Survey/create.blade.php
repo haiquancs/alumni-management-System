@@ -84,7 +84,7 @@ Thông tin thu được từ phiếu này chỉ dùng cho mục đích nghiên c
                                     <div class="form-check form-control col-6" style="border: 0px">
                                         <input class="form-check-input" id="yes" type="radio" name="job" value="{{ \App\Models\JobUser::JOB }}" onclick="" required  @if(@$request['job']==\App\Models\JobUser::JOB)checked="checked"@endif><label class="form-check-label">Có</label><br>
                                         <input class="form-check-input" id="no" type="radio" name="job" value="{{ \App\Models\JobUser::UN_JOB }}"><label class="form-check-label">Không</label>
-                                    </div> 
+                                    </div>
                                 </div>
                                 <div class="form-group row @if(@$request['job']==\App\Models\JobUser::JOB)@else d-none @endif" id="name_job">
                                     <label for="inputEmail3" class="col-4 col-form-label" style="color: green">Ghi rõ tên công việc</label>
@@ -96,11 +96,9 @@ Thông tin thu được từ phiếu này chỉ dùng cho mục đích nghiên c
                                 <div class="form-group row">
                                     <label for="inputEmail3" class="col-4 col-form-label">6. Anh/Chị có công việc đầu tiên sau khi tốt nghiệp bao lâu?</label>
                                     <div class="form-check form-control col-6" style="border: 0px">
-                                        <input class="form-check-input" type="radio" name="time_have_job" value="1" onclick="hide()" @if(@$request['time_have_job']==1)checked="checked"@endif><label class="form-check-label">Có việc làm ngay</label><br>
-                                        <input class="form-check-input" type="radio" name="time_have_job" value="2" onclick="hide()" @if(@$request['time_have_job']==2)checked="checked"@endif><label class="form-check-label">Sau 1-6 tháng</label><br>
-                                        <input class="form-check-input" type="radio" name="time_have_job" value="3" onclick="hide()" @if(@$request['time_have_job']==3)checked="checked"@endif><label class="form-check-label">Sau 6-12 tháng</label><br>
-                                        <input class="form-check-input" type="radio" name="time_have_job" value="4" onclick="hide()" @if(@$request['time_have_job']==4)checked="checked"@endif><label class="form-check-label">Sau 12 tháng</label><br>
-                                        <input class="form-check-input" id="no1" type="radio" name="time_have_job" value="5" onclick="show()" @if(@$request['time_have_job']==5)checked="checked"@endif><label class="form-check-label">Khác</label><br>
+                                        @foreach(\App\Models\JobUser::$timeHaveJob as $key => $value)
+                                            <input class="form-check-input" type="radio" name="time_have_job" value="{{$key}}" onclick="@if($key==\App\Models\JobUser::TIME_JOB5)show()@else hide()@endif" @if(@$request['time_have_job']==$key)checked="checked"@endif><label class="form-check-label">{{$value}}</label><br>
+                                        @endforeach
                                     </div>
                                 </div>
                                 <div class="form-group row @if(@$request['time_have_job']==5)@else d-none @endif" id="time_have_job">
