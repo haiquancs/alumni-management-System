@@ -137,7 +137,7 @@
                             </tr>
                             <tr>
                                 <td>Chuyên ngành tốt nghiệp:</td>
-                                <td>{{Auth::user()->graduation_business}}</td>
+                                <td>{{Auth::user()->business}}</td>
                             </tr>
                             <tr>
                                 <td>Ngày tạo:</td>

@@ -10,11 +10,11 @@ namespace App\Models;
 use App\Models\Rank;
 use DB;
 
-class EvaluationCriteria extends AppModel
+class Salary extends AppModel
 {
-    protected $table = 'evaluation_criterias';
+    protected $table = 'salarys';
     protected $primaryKey = 'id';
-    protected $fillable = ['rank_id', 'name', 'comment', 'total_percents', 'created_id', 'updated_id', 'deleted_id'];
+    protected $fillable = ['salary', 'created_id', 'updated_id', 'deleted_id'];
 
     public function ranks()
     {

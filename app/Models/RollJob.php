@@ -10,7 +10,7 @@ namespace App\Models;
 use Carbon\Carbon;
 use Auth;
 
-class OpesStaff extends AppModel
+class RollJob extends AppModel
 {
     const MONTH_START_SEMESTER_1 = 5;
     const MONTH_START_SEMESTER_2 = 10;
@@ -33,13 +33,9 @@ class OpesStaff extends AppModel
     const TYPE_BUTTON_CREATE = 2;
     const TYPE_BUTTON_FINISH_OPES_UPDATE = 3;
 
-    protected $table = 'opes_staffs';
+    protected $table = 'roll_jobs';
     protected $primaryKey = 'id';
-    protected $fillable = ['staff_id',
-        'rank_id',
-        'year',
-        'semester',
-        'status',
+    protected $fillable = ['roll',
         'created_id',
         'updated_id',
         'deleted_id'

@@ -37,13 +37,27 @@ class JobUser extends AppModel
 
     public static function updateJobUser($data, $userId)
     {
+        dd($data->toArray());
         if($data['job']==self::UN_JOB){
-            self::where('id',$userId)->update(['job_id'=>$data['job']]);
+            $job = array('job' => self::UN_JOB);
+            $getIdJob = self::create($job)->pluck('id')->first();
         }
+        if($data['job']==self::JOB){
+            $job = array(
+                'job' => self::JOB,
+                'name_job' => $data['name_job'],
+            );
+            $getIdJob = self::create($job)->pluck('id')->first();
+        }
+        User::where('id',$userId)->update(['job_id' => $getIdJob]);
+    }
+
+    public static function getJobInfoUsers($jobIdUser){
+        return self::where('id',$jobIdUser)->first();
     }
 
     public static function checkCreateSurvey($data){
-        // dd($data->toArray());
+        $errors = array();
         if($data['name_job']==NULL){
             $errors['name_job'] = 'Bạn chưa điền tên công việc của bạn';
         }

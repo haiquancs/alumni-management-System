@@ -11,9 +11,11 @@ namespace App\Http\Controllers\Web;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Models\JobUser;
-use App\Models\OpesStaff;
+use App\Models\TypeCompany;
 use App\Models\User;
 use App\Models\Business;
+use App\Models\RollJob;
+use App\Models\Salary;
 use Illuminate\Http\Request;
 use App\Models\RequestStaffs;
 use phpDocumentor\Reflection\DocBlock;
@@ -26,16 +28,21 @@ class SurveysController extends AppController
 
     public function index()
     {
-        $users = User::showUser(Auth::id());
-        return view($this->dirView . 'index',compact('users'));
+        $user = User::showUser(Auth::id());
+        $jobInfoUsers = JobUser::getJobInfoUsers($user['job_id']);
+        // dd($jobInfoUsers->toArray());
+        return view($this->dirView . 'index',compact('user','jobInfoUsers'));
     }
 
     public function create()
     {
         $user = User::showUser(Auth::id());
+        $typeDetailCompany = TypeCompany::getTypeDetailFollowType();
+        $rollJob = RollJob::all();
+        $salary = Salary::all();
         $business = Business::all();
         if(!empty($users['job_id'])) abort(404);
-        return view($this->dirView . 'create', compact('user','business')); 
+        return view($this->dirView . 'create', compact('user','business','typeDetailCompany','rollJob','salary')); 
     }   
 
     public function store(Request $request)
@@ -45,12 +52,15 @@ class SurveysController extends AppController
             $error = JobUser::checkCreateSurvey($request);
             if(!empty($error)){
                 $user = User::showUser(Auth::id());
+                $typeDetailCompany = TypeCompany::getTypeDetailFollowType();
+                $rollJob = RollJob::all();
+                $salary = Salary::all();
                 $business = Business::all();
                 if(!empty($users['job_id'])) abort(404);
-                return view($this->dirView . 'create', compact('user','business','error','request')); 
+                return view($this->dirView . 'create', compact('user','business','typeDetailCompany','rollJob','salary','error','request')); 
             }
         }
-        User::updateJobUser($request, Auth::id());
+        JobUser::updateJobUser($request, Auth::id());
         return redirect()->route('web.surveys.index');
     }
 

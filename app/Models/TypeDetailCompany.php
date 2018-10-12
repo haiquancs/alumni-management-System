@@ -6,11 +6,11 @@
  */
 namespace App\Models;
 
-class Grade extends AppModel
+class TypeDetailCompany extends AppModel
 {
-    protected $table = 'grades';
+    protected $table = 'type_detail_companys';
     protected $primaryKey ='id';
-    protected $fillable = ['grade','created_id','updated_id','deleted_id'];
+    protected $fillable = ['type_detail','type_company_id','created_id','updated_id','deleted_id'];
 
     public static function getGrade(){
         $grades = self::select('id', 'grade')

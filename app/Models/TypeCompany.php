@@ -6,13 +6,19 @@
  */
 namespace App\Models;
 
-class Rank extends AppModel
+class TypeCompany extends AppModel
 {
-    protected $table = 'ranks';
+    protected $table = 'type_companys';
     protected $primaryKey ='id';
-    protected $fillable = ['rank','created_id','updated_id','deleted_id'];
+    protected $fillable = ['type','created_id','updated_id','deleted_id'];
 
-    public static function getRank(){
+    public static function getTypeDetailFollowType(){
+        return self::select('id','type')
+        ->with(['typeDetailCompany'])
+        ->get();
+    }
+
+    public static function getTypeCompany(){
         $ranks = self::select('id', 'rank')
             ->orderBy('rank', 'ASC')
             ->get();
@@ -93,7 +99,7 @@ class Rank extends AppModel
         return true;
     }
 
-    public function evaluationCriteria(){
-        return $this->hasMany('App\Models\EvaluationCriteria', 'rank_id', 'id');
+    public function typeDetailCompany(){
+        return $this->hasMany('App\Models\TypeDetailCompany', 'type_company_id', 'id');
     }
 }

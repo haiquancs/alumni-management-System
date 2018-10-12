@@ -13,19 +13,23 @@
             <div class="container-fluid">
                 <div class="card card-default">
                     <div class="card-header">
-                        <h3 class="card-title">BẢN KHẢO SÁT</h3>
+                        <h3 class="card-title">BẢN KHẢO SÁT CỦA BẠN</h3>
                     </div>
                     <!-- /.card-header -->
                     <div class="card-body">
                         <!-- form start -->
                         <div class="box-body">
-                            @if($users['job_id']==NULL||$users['job_id']==0)
+                            @if($user['job_id']==NULL||$user['job_id']==0)
                             <div class="box-footer" style="text-align: center;">
                                 <a class="btn btn-info" href="{{ route('web.surveys.create') }}" style="width: 500px; height: 70px; font-size: 40px ">BẮT ĐẦU KHẢO SÁT</a>
                             </div>
                             @else
                             <table class="table table-user-information" style="width: 40%">
                                 <tbody>
+                                <tr>
+                                    <td><h2>Thông tin cá nhân</h2></td>
+                                    <td></td>
+                                </tr>    
                                 <tr>
                                     <td>Tên sinh viên:</td>
                                     <td>{{Auth::user()->full_name}}</td>
@@ -58,6 +62,49 @@
                                     <td>Ngày tạo:</td>
                                     <td>{{Auth::user()->last_access_at}}</td>
                                 </tr>
+                                @if(!empty($jobInfoUsers))
+                                <tr>
+                                    <td><h2>Thông tin công việc</h2></td>
+                                    <td></td>
+                                </tr>
+                                @if($jobInfoUsers['job']==\App\Models\JobUser::UN_JOB)
+                                    <td><h3 style="color: red">Hiện tại bạn chưa có công việc</h3></td>
+                                    <td></td>
+                                @else
+                                <tr>
+                                    <td>Tên công việc:</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Thời gian có việc sau khi tốt nghiệp:</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Giới tính:</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Được giới thiệu từ:</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Loại hình cơ quan đang làm việc:</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Vị trí công việc:</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Mức lương:</td>
+                                    <td></td>
+                                </tr>
+                                <tr>
+                                    <td>Khóa đào tạo tham gia:</td>
+                                    <td></td>
+                                </tr>
+                                @endif
+                                @endif
                                 </tbody>
                             </table>
                             <div class="box-footer">
