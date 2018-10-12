@@ -101,7 +101,7 @@ Thông tin thu được từ phiếu này chỉ dùng cho mục đích nghiên c
                                         @endforeach
                                     </div>
                                 </div>
-                                <div class="form-group row @if(@$request['time_have_job']==5)@else d-none @endif" id="time_have_job">
+                                <div class="form-group row @if(@$request['time_have_job']==\App\Models\JobUser::TIME_JOB5)@else d-none @endif" id="time_have_job">
                                     <label for="inputEmail3" class="col-4 col-form-label" style="color: green">Ghi rõ trong bao lâu</label>
                                     <input class="form-control col-6" type="text" name="time_have_job_else" value="@if(@$request['time_have_job_else']!=NULL){{ $request['time_have_job_else'] }}@endif" placeholder="Câu trả lời của bạn">
                                 </div>
@@ -111,24 +111,25 @@ Thông tin thu được từ phiếu này chỉ dùng cho mục đích nghiên c
                                 <div class="form-group row">
                                     <label for="inputEmail3" class="col-4 col-form-label">7. Anh/Chị tìm được việc làm hiện tại qua các nguồn thông tin nào?<a style="color: red">(không bắt buộc)</a></label>
                                     <div class="form-check form-control col-6" style="border: 0px">
-                                        <input class="form-check-input" type="radio" name="introduce_source" value="1" onclick=""><label class="form-check-label">Quảng cáo việc làm</label><br>
-                                        <input class="form-check-input" type="radio" name="introduce_source" value="2" onclick=""><label class="form-check-label">Bạn bè, người quen giới thiệu</label><br>
+                                        @foreach(\App\Models\JobUser::$introduceSource as $key => $value)
+                                            <input class="form-check-input" type="radio" name="introduce_source" value="{{$key}}" onclick=""><label class="form-check-label">{{$value}}</label><br>
+                                        @endforeach
                                     </div>
                                 </div>
                                 <div class="form-group row">
                                     <label for="inputEmail3" class="col-4 col-form-label">8. Loại hình cơ quan Anh/Chị đang làm việc?</label>
                                     <div class="form-check form-control col-6" style="border: 0px">
                                         @foreach($typeDetailCompany as $key => $type)
-                                            <input class="form-check-input" type="radio" name="type_company" value="{{ $key+1 }}" onclick=@if($key==0)"country()" @elseif($key==1) "aGencies()" @elseif($key==2) "nonOrganizations()" @endif @if(@$request['type_company']==($key+1))checked="checked"@endif><label class="form-check-label">{{ $type['type'] }}</label><br>
+                                            <input class="form-check-input" type="radio" name="type_company" value="{{ $type['id'] }}" onclick=@if($type['id']==1)"country()" @elseif($type['id']==2) "aGencies()" @elseif($type['id']==3) "nonOrganizations()" @endif @if(@$request['type_company']==($type['id']))checked="checked"@endif><label class="form-check-label">{{ $type['type'] }}</label><br>
                                         @endforeach
-                                        <input class="form-check-input" type="radio" name="type_company" value="4" onclick="typeCompanyElse()" @if(@$request['type_company']==4)checked="checked"@endif><label class="form-check-label">Khác</label><br>
+                                        <input class="form-check-input" type="radio" name="type_company" value="9999999999999999999" onclick="typeCompanyElse()" @if(@$request['type_company']==9999999999999999999)checked="checked"@endif><label class="form-check-label">Khác</label><br>
                                     </div>
                                 </div>
                                 <div class="form-group row @if(@$request['type_company']==1)@else d-none @endif" id="country">
                                     <label for="inputEmail3" class="col-4 col-form-label" style="color: green">Loại hình cơ quan Nhà nước</label>
                                     <div class="form-check form-control col-6" style="border: 0px">
                                         @foreach($typeDetailCompany[0]['typeDetailCompany'] as $key => $typeDetail)
-                                            <input class="form-check-input" type="radio" name="agencies" value="{{ $key+1 }}" @if(@$request['agencies']==($key+1))checked="checked"@endif><label class="form-check-label">{{ $typeDetail['type_detail'] }}</label><br>
+                                            <input class="form-check-input" type="radio" name="agencies" value="{{ $typeDetail['id'] }}" @if(@$request['agencies']==($typeDetail['id']))checked="checked"@endif><label class="form-check-label">{{ $typeDetail['type_detail'] }}</label><br>
                                         @endforeach
                                     </div>
                                 </div>
@@ -136,7 +137,7 @@ Thông tin thu được từ phiếu này chỉ dùng cho mục đích nghiên c
                                     <label for="inputEmail3" class="col-4 col-form-label" style="color: green">Cơ quan/Doanh nghiệp</label>
                                     <div class="form-check form-control col-6" style="border: 0px">
                                         @foreach($typeDetailCompany[1]['typeDetailCompany'] as $key => $typeDetail)
-                                            <input class="form-check-input" type="radio" name="enterprise" value="{{ $key+1 }}" @if(@$request['enterprise']==($key+1))checked="checked"@endif><label class="form-check-label">{{ $typeDetail['type_detail'] }}</label><br>
+                                            <input class="form-check-input" type="radio" name="enterprise" value="{{ $typeDetail['id'] }}" @if(@$request['enterprise']==($typeDetail['id']))checked="checked"@endif><label class="form-check-label">{{ $typeDetail['type_detail'] }}</label><br>
                                         @endforeach
                                     </div>
                                 </div>
@@ -144,11 +145,11 @@ Thông tin thu được từ phiếu này chỉ dùng cho mục đích nghiên c
                                     <label for="inputEmail3" class="col-4 col-form-label" style="color: green">Tổ chức phi chính phủ</label>
                                     <div class="form-check form-control col-6" style="border: 0px">
                                         @foreach($typeDetailCompany[2]['typeDetailCompany'] as $key => $typeDetail)
-                                            <input class="form-check-input" type="radio" name="non_organizations" value="{{ $key+1 }}" @if(@$request['non_organizations']==($key+1))checked="checked"@endif><label class="form-check-label">{{ $typeDetail['type_detail'] }}</label><br>
+                                            <input class="form-check-input" type="radio" name="non_organizations" value="{{ $typeDetail['id'] }}" @if(@$request['non_organizations']==($typeDetail['id']))checked="checked"@endif><label class="form-check-label">{{ $typeDetail['type_detail'] }}</label><br>
                                         @endforeach
                                     </div>
                                 </div>
-                                <div class="form-group row @if(@$request['type_company']==4)@else d-none @endif" id="type_company_else">
+                                <div class="form-group row @if(@$request['type_company']==9999999999999999999)@else d-none @endif" id="type_company_else">
                                     <label for="inputEmail3" class="col-4 col-form-label" style="color: green">Loại hình khác(ghi rõ)</label>
                                     <input class="form-control col-6" type="text" name="type_company_else" value="@if(@$request['type_company_else']!=NULL){{ $request['type_company_else'] }}@endif" placeholder="Câu trả lời của bạn">
                                 </div>
@@ -159,12 +160,12 @@ Thông tin thu được từ phiếu này chỉ dùng cho mục đích nghiên c
                                     <label for="inputEmail3" class="col-4 col-form-label">9. Ví trí hiện tại Anh/Chị được bố trí?</label>
                                     <div class="form-check form-control col-6" style="border: 0px">
                                         @foreach($rollJob as $key => $roll)
-                                            <input class="form-check-input" type="radio" name="roll_job" value="{{ $key+1 }}" onclick="hide1()" @if(@$request['roll_job']==($key+1))checked="checked"@endif><label class="form-check-label">{{ $roll['roll'] }}</label><br>
+                                            <input class="form-check-input" type="radio" name="roll_job" value="{{ $roll['id'] }}" onclick="hide1()" @if(@$request['roll_job']==($roll['id']))checked="checked"@endif><label class="form-check-label">{{ $roll['roll'] }}</label><br>
                                         @endforeach
-                                        <input class="form-check-input" type="radio" name="roll_job" value="5" onclick="show1()" @if(@$request['roll_job']==5)checked="checked"@endif><label class="form-check-label">Vị trí khác</label>
+                                        <input class="form-check-input" type="radio" name="roll_job" value="99999999999999" onclick="show1()" @if(@$request['roll_job']==99999999999999)checked="checked"@endif><label class="form-check-label">Vị trí khác</label>
                                     </div>
                                 </div>
-                                <div class="form-group row @if(@$request['roll_job']==5)@else d-none @endif" id="roll_job">
+                                <div class="form-group row @if(@$request['roll_job']==99999999999999)@else d-none @endif" id="roll_job">
                                     <label for="inputEmail3" class="col-4 col-form-label" style="color: green">Ghi rõ vị trí khác</label>
                                     <input class="form-control col-6" type="text" name="roll_job_else" value="@if(@$request['roll_job_else']!=NULL){{ $request['roll_job_else'] }}@endif" placeholder="Câu trả lời của bạn">
                                 </div>
@@ -188,12 +189,7 @@ Thông tin thu được từ phiếu này chỉ dùng cho mục đích nghiên c
                                         <input class="form-check-input" type="checkbox" name="traning[3]" value="Văn bằng hai"><label class="form-check-label">Văn bằng hai</label><br>
                                         <input class="form-check-input" type="checkbox" name="traning[4]" value="Kỹ năng mềm"><label class="form-check-label">Kỹ năng mềm</label><br>
                                         <input class="form-check-input" type="checkbox" name="traning[5]" value="Đi du học"><label class="form-check-label">Đi du học</label><br>
-                                        <input class="form-check-input" type="checkbox" name="traning[6]" value="6" onclick="show2()"><label class="form-check-label">Khác</label><br>
                                     </div>
-                                </div>
-                                <div class="form-group row d-none" id="traning">
-                                    <label for="inputEmail3" class="col-4 col-form-label" style="color: green">Ghi rõ khóa đào tạo khác</label>
-                                    <input class="form-control col-6" type="text" name="traning_else" value="" placeholder="Câu trả lời của bạn">
                                 </div>
                                 <div class="box-footer">
                                     <button type="submit" class="btn btn-info">Gửi bản khảo sát</button>
@@ -237,9 +233,6 @@ Thông tin thu được từ phiếu này chỉ dùng cho mục đích nghiên c
         }
         function hide1(){
             document.getElementById("roll_job").classList.add('d-none');
-        }
-        function show2(){
-            document.getElementById("traning").classList.remove('d-none');
         }
         function country(){
             document.getElementById("country").classList.remove('d-none');

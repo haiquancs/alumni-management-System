@@ -20,6 +20,9 @@ class JobUser extends AppModel
     const TIME_JOB4 = 4;
     const TIME_JOB5 = 5;
 
+    const INTRODUCE_SOURCE1 = 1;
+    const INTRODUCE_SOURCE2 = 2;
+
     public static $job = [
         self::JOB => 'Có',
         self::UN_JOB => 'Không',
@@ -33,13 +36,18 @@ class JobUser extends AppModel
         self::TIME_JOB5 => 'Khác',
     ];
 
+    public static $introduceSource = [
+        self::INTRODUCE_SOURCE1 => 'Quảng cáo việc làm',
+        self::INTRODUCE_SOURCE2 => 'Bạn bè, người quen giới thiệu',
+    ];
+
     protected $table = 'job_users';
     protected $primaryKey = 'id';
     protected $fillable = [
         'job',
         'name_job',
         'roll_job_id',
-        'type_company_id',
+        'type_company_detail_id',
         'traning',
         'introduce_source',
         'time_have_job',
@@ -51,10 +59,12 @@ class JobUser extends AppModel
 
     public static function updateJobUser($data, $userId)
     {
-        dd($data->toArray());
+//        dd($data['time_have_job']);
+//        $getIdTypeCompany = TypeCompany::select('id')->get();
+//        dd($getIdTypeCompany->toArray());
         if ($data['job'] == self::UN_JOB) {
             $job = array('job' => self::UN_JOB);
-            $getIdJob = self::create($job)->pluck('id')->first();
+            $getIdJob = self::create($job)->id;
         }
         if ($data['job'] == self::JOB) {
             $job = array(
@@ -63,12 +73,37 @@ class JobUser extends AppModel
             );
 //            Tiếp tục các trường
             if ($data['time_have_job'] == self::TIME_JOB5) {
-                $job['time_have_job'] == $data['time_have_job_else'];
+                $job['time_have_job'] = $data['time_have_job_else'];
             } else {
-                $job['time_have_job'] == $data['time_have_job'];
+                $job['time_have_job'] = $data['time_have_job'];
             }
-            if()
-            $getIdJob = self::create($job)->pluck('id')->first();
+            if(empty(TypeCompany::where('id',$data['type_company'])->get()->toArray())){
+                $getIdNewTypeCompany = TypeCompany::create(array('type'=>$data['type_company_else']))->id;
+                $getIdNewTypeDetailCompany = TypeDetailCompany::create(array('type_company_id'=>$getIdNewTypeCompany))->id;
+                $job['type_company_detail_id'] = $getIdNewTypeDetailCompany;
+            }elseif($data['type_company']==1){
+                $job['type_company_detail_id'] = $data['agencies'];
+            }elseif($data['type_company']==2){
+                $job['type_company_detail_id'] = $data['enterprise'];
+            }elseif($data['type_company']==3){
+                $job['type_company_detail_id'] = $data['non_organizations'];
+            }
+            if(empty(RollJob::where('id',$data['roll_job'])->get()->toArray())){
+                $getIdNewRollJob = RollJob::create(array('roll'=>$data['roll_job_else']))->id;
+                $job['roll_job_id'] = $getIdNewRollJob;
+            }else{
+                $job['roll_job_id'] = $data['roll_job'];
+            }
+            if(@$data['introduce_source']){
+                $job['introduce_source'] = $data['introduce_source'];
+            }
+            if(@$data['salary']){
+                $job['salary_id'] = $data['salary'];
+            }
+            if(@$data['traning']){
+                $job['traning'] = implode(",", $data['traning']);
+            }
+            $getIdJob = self::create($job)->id;
         }
         User::where('id', $userId)->update(['job_id' => $getIdJob]);
     }
@@ -87,7 +122,7 @@ class JobUser extends AppModel
         if (!@$data['time_have_job']) {
             $errors['time_have_job'] = 'Bạn chưa chọn trường này';
         }
-        if ($data['time_have_job'] == 5 && $data['time_have_job_else'] == NUll) {
+        if ($data['time_have_job'] == self::TIME_JOB5 && $data['time_have_job_else'] == NUll) {
             $errors['time_have_job'] = 'Bạn chưa điền thời gian khác';
         }
         if (!@$data['type_company']) {
@@ -102,13 +137,13 @@ class JobUser extends AppModel
         if ($data['type_company'] == 3 && !@$data['non_organizations']) {
             $errors['type_company'] = 'Bạn chưa chọn Tổ chức phi chính phủ';
         }
-        if ($data['type_company'] == 4 && $data['type_company_else'] == NUll) {
+        if ($data['type_company'] == 9999999999999999999 && $data['type_company_else'] == NUll) {
             $errors['type_company'] = 'Bạn chưa điền loại hình khác';
         }
         if (!@$data['roll_job']) {
             $errors['roll_job'] = 'Bạn chưa chọn trường này';
         }
-        if ($data['roll_job'] == 5 && $data['roll_job_else'] == NUll) {
+        if ($data['roll_job'] == 99999999999999 && $data['roll_job_else'] == NUll) {
             $errors['roll_job'] = 'Bạn chưa điền vị trí khác';
         }
         return $errors;
