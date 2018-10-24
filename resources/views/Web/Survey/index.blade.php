@@ -73,35 +73,31 @@
                                 @else
                                 <tr>
                                     <td>Tên công việc:</td>
-                                    <td></td>
+                                    <td>{{$jobInfoUsers['name_job']}}</td>
                                 </tr>
                                 <tr>
                                     <td>Thời gian có việc sau khi tốt nghiệp:</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>Giới tính:</td>
-                                    <td></td>
+                                    <td>@if(@(\App\Models\JobUser::$timeHaveJob[$jobInfoUsers['time_have_job']])){{\App\Models\JobUser::$timeHaveJob[$jobInfoUsers['time_have_job']]}}@else{{ $jobInfoUsers['time_have_job'] }}@endif</td>
                                 </tr>
                                 <tr>
                                     <td>Được giới thiệu từ:</td>
-                                    <td></td>
+                                    <td>@if(@$jobInfoUsers['introduce_source']){{\App\Models\JobUser::$introduceSource[$jobInfoUsers['introduce_source']]}}@endif</td>
                                 </tr>
                                 <tr>
                                     <td>Loại hình cơ quan đang làm việc:</td>
-                                    <td></td>
+                                    <td>{{$jobInfoUsers['typeDetailCompany']['typeCompany']['type']}} - {{$jobInfoUsers['typeDetailCompany']['type_detail']}}</td>
                                 </tr>
                                 <tr>
                                     <td>Vị trí công việc:</td>
-                                    <td></td>
+                                    <td>{{$jobInfoUsers['rollJob']['roll']}}</td>
                                 </tr>
                                 <tr>
                                     <td>Mức lương:</td>
-                                    <td></td>
+                                    <td>{{$jobInfoUsers['salary']['salary']}}</td>
                                 </tr>
                                 <tr>
                                     <td>Khóa đào tạo tham gia:</td>
-                                    <td></td>
+                                    <td>{{$jobInfoUsers['traning']}}</td>
                                 </tr>
                                 @endif
                                 @endif

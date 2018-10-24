@@ -110,7 +110,10 @@ class JobUser extends AppModel
 
     public static function getJobInfoUsers($jobIdUser)
     {
-        return self::where('id', $jobIdUser)->first();
+        return self::where('id', $jobIdUser)
+            ->with(['typeDetailCompany' => function ($query){
+                $query->with(['typeCompany']);
+            }])->with(['rollJob'])->with(['salary'])->first();
     }
 
     public static function checkCreateSurvey($data)
@@ -354,6 +357,18 @@ class JobUser extends AppModel
     public function evaluationCriteria()
     {
         return $this->belongsTo(EvaluationCriteria::class, 'evaluation_criteria_id', 'id');
+    }
+
+    public function typeDetailCompany(){
+        return $this->belongsTo(TypeDetailCompany::class, 'type_company_detail_id', 'id');
+    }
+
+    public function rollJob(){
+        return $this->belongsTo(RollJob::class, 'roll_job_id', 'id');
+    }
+
+    public function salary(){
+        return $this->belongsTo(Salary::class, 'salary_id', 'id');
     }
 }
 

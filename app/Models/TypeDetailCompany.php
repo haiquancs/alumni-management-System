@@ -72,4 +72,8 @@ class TypeDetailCompany extends AppModel
         }
         return true;
     }
+
+    public function typeCompany(){
+        return $this->belongsTo(TypeCompany::class, 'type_company_id', 'id');
+    }
 }
