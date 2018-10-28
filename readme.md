@@ -9,6 +9,8 @@
 - Trần thị Phương Anh
 
 Dự án quản lý thông tin công việc của cựu sinh viên
+- Công cụ: xampp, git, composer, sublime text 3 hoặc php stome,...
+- Framework : Laravel 5.4
 
 <p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 
