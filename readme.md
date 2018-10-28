@@ -1,3 +1,15 @@
+﻿BTLWEB-Thầy Việt Anh
+
+Được thực hiển bởi nhóm gồm các thành viên:
+- Trịnh Hải Quân(nhóm trưởng)
+- Lê Văn Công
+- Anh Tran
+- Nguyễn Văn Tùng
+- Nguyễn Như ý
+- Trần thị Phương Anh
+
+Dự án quản lý thông tin công việc của cựu sinh viên
+
 <p align="center"><img src="https://laravel.com/assets/img/components/logo-laravel.svg"></p>
 
 <p align="center">
