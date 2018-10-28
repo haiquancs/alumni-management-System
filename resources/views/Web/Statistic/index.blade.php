@@ -47,7 +47,7 @@
                         <!-- DONUT CHART -->
                         <div class="card card-danger">
                             <div class="card-header">
-                                <h3 class="card-title">Donut Chart</h3>
+                                <h3 class="card-title">Công việc</h3>
 
                                 <div class="card-tools">
                                     <button type="button" class="btn btn-tool" data-widget="collapse"><i
@@ -206,7 +206,7 @@
                 //Boolean - Whether to fill the dataset with a color
                 datasetFill: true,
                 //String - A legend template
-                legendTemplate: '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<datasets.length; i++){%><li><span style="background-color:<%=datasets[i].lineColor%>"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>',
+                {{--legendTemplate: '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<datasets.length; i++){%><li><span style="background-color:<%=datasets[i].lineColor%>"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>',--}}
                 //Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
                 maintainAspectRatio: true,
                 //Boolean - whether to make the chart responsive to window resizing
@@ -236,37 +236,13 @@
                     value: 700,
                     color: '#f56954',
                     highlight: '#f56954',
-                    label: 'Chrome'
+                    label: 'Không có việc'
                 },
                 {
                     value: 500,
                     color: '#00a65a',
                     highlight: '#00a65a',
-                    label: 'IE'
-                },
-                {
-                    value: 400,
-                    color: '#f39c12',
-                    highlight: '#f39c12',
-                    label: 'FireFox'
-                },
-                {
-                    value: 600,
-                    color: '#00c0ef',
-                    highlight: '#00c0ef',
-                    label: 'Safari'
-                },
-                {
-                    value: 300,
-                    color: '#3c8dbc',
-                    highlight: '#3c8dbc',
-                    label: 'Opera'
-                },
-                {
-                    value: 100,
-                    color: '#d2d6de',
-                    highlight: '#d2d6de',
-                    label: 'Navigator'
+                    label: 'Có việc'
                 }
             ]
             var pieOptions = {
@@ -291,7 +267,7 @@
                 // Boolean - whether to maintain the starting aspect ratio or not when responsive, if set to false, will take up entire container
                 maintainAspectRatio: true,
                 //String - A legend template
-                legendTemplate: '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
+                {{--legendTemplate: '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<segments.length; i++){%><li><span style="background-color:<%=segments[i].fillColor%>"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'--}}
             }
             //Create pie or douhnut chart
             // You can switch between pie and douhnut using the method below.
@@ -328,7 +304,7 @@
                 //Number - Spacing between data sets within X values
                 barDatasetSpacing: 1,
                 //String - A legend template
-                legendTemplate: '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<datasets.length; i++){%><li><span style="background-color:<%=datasets[i].fillColor%>"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>',
+                {{--legendTemplate: '<ul class="<%=name.toLowerCase()%>-legend"><% for (var i=0; i<datasets.length; i++){%><li><span style="background-color:<%=datasets[i].fillColor%>"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>',--}}
                 //Boolean - whether to make the chart responsive
                 responsive: true,
                 maintainAspectRatio: true
