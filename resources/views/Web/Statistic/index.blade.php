@@ -9,7 +9,8 @@
                 <div class="row mb-2">
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-left">
-                            <li class="breadcrumb-item"><a href="#">Thống kê, báo cáo</a>
+                            <li class="breadcrumb-item"><a href="{{route('web.statistics.index')}}">Thống kê, báo
+                                    cáo</a>
                             </li>
                         </ol>
                     </div>
@@ -25,7 +26,7 @@
                         <!-- AREA CHART -->
                         <div class="card card-primary">
                             <div class="card-header">
-                                <h3 class="card-title">Area Chart</h3>
+                                <h3 class="card-title">Lượt Truy Cập</h3>
 
                                 <div class="card-tools">
                                     <button type="button" class="btn btn-tool" data-widget="collapse"><i
@@ -112,6 +113,7 @@
                         <!-- /.card -->
 
                     </div>
+
                     <!-- /.col (RIGHT) -->
                 </div>
                 <!-- /.row -->
@@ -119,6 +121,169 @@
         </section>
         <!-- /.content -->
     </div>
+    {{--<div class="content">--}}
+        {{--<!-- Content Header (Page header) -->--}}
+        {{--<section class="content-header">--}}
+            {{--<div class="container-fluid">--}}
+                {{--<div class="row mb-2">--}}
+                    {{--<div class="col-sm-6">--}}
+                        {{--<h1>Flot Charts</h1>--}}
+                    {{--</div>--}}
+                    {{--<div class="col-sm-6">--}}
+                        {{--<ol class="breadcrumb float-sm-right">--}}
+                            {{--<li class="breadcrumb-item"><a href="#">Home</a></li>--}}
+                            {{--<li class="breadcrumb-item active">Flot</li>--}}
+                        {{--</ol>--}}
+                    {{--</div>--}}
+                {{--</div>--}}
+            {{--</div><!-- /.container-fluid -->--}}
+        {{--</section>--}}
+
+        {{--<!-- Main content -->--}}
+        {{--<section class="content">--}}
+            {{--<div class="container-fluid">--}}
+                {{--<div class="row">--}}
+                    {{--<div class="col-12">--}}
+                        {{--<!-- interactive chart -->--}}
+                        {{--<div class="card card-primary card-outline">--}}
+                            {{--<div class="card-header">--}}
+                                {{--<h3 class="card-title">--}}
+                                    {{--<i class="fa fa-bar-chart-o"></i>--}}
+                                    {{--Interactive Area Chart--}}
+                                {{--</h3>--}}
+
+                                {{--<div class="card-tools">--}}
+                                    {{--Real time--}}
+                                    {{--<div class="btn-group" id="realtime" data-toggle="btn-toggle">--}}
+                                        {{--<button type="button" class="btn btn-default btn-sm active" data-toggle="on">--}}
+                                            {{--On--}}
+                                        {{--</button>--}}
+                                        {{--<button type="button" class="btn btn-default btn-sm" data-toggle="off">Off--}}
+                                        {{--</button>--}}
+                                    {{--</div>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                            {{--<div class="card-body">--}}
+                                {{--<div id="interactive" style="height: 300px;"></div>--}}
+                            {{--</div>--}}
+                            {{--<!-- /.card-body-->--}}
+                        {{--</div>--}}
+                        {{--<!-- /.card -->--}}
+
+                    {{--</div>--}}
+                    {{--<!-- /.col -->--}}
+                {{--</div>--}}
+                {{--<!-- /.row -->--}}
+
+                {{--<div class="row">--}}
+                    {{--<div class="col-md-6">--}}
+                        {{--<!-- Line chart -->--}}
+                        {{--<div class="card card-primary card-outline">--}}
+                            {{--<div class="card-header">--}}
+                                {{--<h3 class="card-title">--}}
+                                    {{--<i class="fa fa-bar-chart-o"></i>--}}
+                                    {{--Line Chart--}}
+                                {{--</h3>--}}
+
+                                {{--<div class="card-tools">--}}
+                                    {{--<button type="button" class="btn btn-tool" data-widget="collapse"><i--}}
+                                                {{--class="fa fa-minus"></i>--}}
+                                    {{--</button>--}}
+                                    {{--<button type="button" class="btn btn-tool" data-widget="remove"><i--}}
+                                                {{--class="fa fa-times"></i>--}}
+                                    {{--</button>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                            {{--<div class="card-body">--}}
+                                {{--<div id="line-chart" style="height: 300px;"></div>--}}
+                            {{--</div>--}}
+                            {{--<!-- /.card-body-->--}}
+                        {{--</div>--}}
+                        {{--<!-- /.card -->--}}
+
+                        {{--<!-- Area chart -->--}}
+                        {{--<div class="card card-primary card-outline">--}}
+                            {{--<div class="card-header">--}}
+                                {{--<h3 class="card-title">--}}
+                                    {{--<i class="fa fa-bar-chart-o"></i>--}}
+                                    {{--Area Chart--}}
+                                {{--</h3>--}}
+
+                                {{--<div class="card-tools">--}}
+                                    {{--<button type="button" class="btn btn-tool" data-widget="collapse"><i--}}
+                                                {{--class="fa fa-minus"></i>--}}
+                                    {{--</button>--}}
+                                    {{--<button type="button" class="btn btn-tool" data-widget="remove"><i--}}
+                                                {{--class="fa fa-times"></i>--}}
+                                    {{--</button>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                            {{--<div class="card-body">--}}
+                                {{--<div id="area-chart" style="height: 338px;" class="full-width-chart"></div>--}}
+                            {{--</div>--}}
+                            {{--<!-- /.card-body-->--}}
+                        {{--</div>--}}
+                        {{--<!-- /.card -->--}}
+
+                    {{--</div>--}}
+                    {{--<!-- /.col -->--}}
+
+                    {{--<div class="col-md-6">--}}
+                        {{--<!-- Bar chart -->--}}
+                        {{--<div class="card card-primary card-outline">--}}
+                            {{--<div class="card-header">--}}
+                                {{--<h3 class="card-title">--}}
+                                    {{--<i class="fa fa-bar-chart-o"></i>--}}
+                                    {{--Bar Chart--}}
+                                {{--</h3>--}}
+
+                                {{--<div class="card-tools">--}}
+                                    {{--<button type="button" class="btn btn-tool" data-widget="collapse">--}}
+                                        {{--<i class="fa fa-minus"></i>--}}
+                                    {{--</button>--}}
+                                    {{--<button type="button" class="btn btn-tool" data-widget="remove">--}}
+                                        {{--<i class="fa fa-times"></i>--}}
+                                    {{--</button>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                            {{--<div class="card-body">--}}
+                                {{--<div id="bar-chart" style="height: 300px;"></div>--}}
+                            {{--</div>--}}
+                            {{--<!-- /.card-body-->--}}
+                        {{--</div>--}}
+                        {{--<!-- /.card -->--}}
+
+                        {{--<!-- Donut chart -->--}}
+                        {{--<div class="card card-primary card-outline">--}}
+                            {{--<div class="card-header">--}}
+                                {{--<h3 class="card-title">--}}
+                                    {{--<i class="fa fa-bar-chart-o"></i>--}}
+                                    {{--Donut Chart--}}
+                                {{--</h3>--}}
+
+                                {{--<div class="card-tools">--}}
+                                    {{--<button type="button" class="btn btn-tool" data-widget="collapse"><i--}}
+                                                {{--class="fa fa-minus"></i>--}}
+                                    {{--</button>--}}
+                                    {{--<button type="button" class="btn btn-tool" data-widget="remove"><i--}}
+                                                {{--class="fa fa-times"></i>--}}
+                                    {{--</button>--}}
+                                {{--</div>--}}
+                            {{--</div>--}}
+                            {{--<div class="card-body">--}}
+                                {{--<div id="donut-chart" style="height: 300px;"></div>--}}
+                            {{--</div>--}}
+                            {{--<!-- /.card-body-->--}}
+                        {{--</div>--}}
+                        {{--<!-- /.card -->--}}
+                    {{--</div>--}}
+                    {{--<!-- /.col -->--}}
+                {{--</div>--}}
+                {{--<!-- /.row -->--}}
+            {{--</div><!-- /.container-fluid -->--}}
+        {{--</section>--}}
+        {{--<!-- /.content -->--}}
+    {{--</div>--}}
     <!-- jQuery -->
     <script src="{{asset('js/alumi/js/jquery.min.js')}}"></script>
     <!-- Bootstrap 4 -->
@@ -131,7 +296,16 @@
     <script src="{{asset('js/alumi/js/adminlte.min.js')}}"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="{{asset('js/alumi/js/demo.js')}}"></script>
+    {{--<!-- FLOT CHARTS -->--}}
+    {{--<script src="{{asset('js/alumi/js/jquery.flot.min.js')}}"></script>--}}
+    {{--<!-- FLOT RESIZE PLUGIN - allows the chart to redraw when the window is resized -->--}}
+    {{--<script src="{{asset('js/alumi/js/jquery.flot.resize.min.js')}}"></script>--}}
+    {{--<!-- FLOT PIE PLUGIN - also used to draw donut charts -->--}}
+    {{--<script src="{{asset('js/alumi/js/jquery.flot.pie.min.js')}}"></script>--}}
+    {{--<!-- FLOT CATEGORIES PLUGIN - Used to draw bar charts -->--}}
+    {{--<script src="{{asset('js/alumi/js/jquery.flot.categories.min.js')}}"></script>--}}
     <!-- page script -->
+
     <script>
         $(function () {
             /* ChartJS
@@ -149,7 +323,7 @@
             var areaChart = new Chart(areaChartCanvas)
 
             var areaChartData = {
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                labels: ['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12'],
                 datasets: [
                     {
                         label: 'Electronics',
@@ -159,7 +333,7 @@
                         pointStrokeColor: '#c1c7d1',
                         pointHighlightFill: '#fff',
                         pointHighlightStroke: 'rgba(220,220,220,1)',
-                        data: [65, 59, 80, 81, 56, 55, 40]
+                        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 40, 0, 0]
                     },
                     {
                         label: 'Digital Goods',
@@ -169,7 +343,7 @@
                         pointStrokeColor: 'rgba(60,141,188,1)',
                         pointHighlightFill: '#fff',
                         pointHighlightStroke: 'rgba(60,141,188,1)',
-                        data: [28, 48, 40, 19, 86, 27, 90]
+                        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 600, 0, 0]
                     }
                 ]
             }
@@ -233,13 +407,13 @@
             var pieChart = new Chart(pieChartCanvas)
             var PieData = [
                 {
-                    value: 700,
+                    value: {{$infoAllListSurvey['job']['un_job']}},
                     color: '#f56954',
                     highlight: '#f56954',
                     label: 'Không có việc'
                 },
                 {
-                    value: 500,
+                    value: {{$infoAllListSurvey['job']['job']}},
                     color: '#00a65a',
                     highlight: '#00a65a',
                     label: 'Có việc'
@@ -272,6 +446,8 @@
             //Create pie or douhnut chart
             // You can switch between pie and douhnut using the method below.
             pieChart.Doughnut(PieData, pieOptions)
+
+
 
             //-------------
             //- BAR CHART -
@@ -314,5 +490,10 @@
             barChart.Bar(barChartData, barChartOptions)
         })
     </script>
+    {{--<script src="{{asset('js/app.js')}}"></script>--}}
+    {{--<!-- Bootstrap -->--}}
+    <script src="{{asset('js/web/bootstrap.min.js')}}"></script>
+    <script src="{{asset('js/web/adminlte.js')}}"></script>
+    <script src="{{asset('js/web/custom.js')}}"></script>
 
 @endsection

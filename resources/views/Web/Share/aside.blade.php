@@ -24,7 +24,7 @@
                 @endif
                 @if(\Illuminate\Support\Facades\Auth::user()->role == \App\Models\User::ROLE_ADMIN)
                     <li class="nav-item">
-                        <a href="{{route('web.surveys.manage-surveys')}}" class="nav-link {{-- {{ explode('/',Request::path())[0]=='users'?'activeCustom':'' }} --}}">
+                        <a href="{{route('web.surveys.manage-surveys')}}" class="nav-link {{ Request::path()=='manage-surveys'?'activeCustom':'' }}">
                             <i class="nav-icon fas fa fa-edit"></i>
                             <p>
                                 Quản Lý Survey
@@ -34,7 +34,7 @@
                 @endif
                 @if(\Illuminate\Support\Facades\Auth::user()->role == \App\Models\User::ROLE_ADMIN)
                     <li class="nav-item has-treeview">
-                        <a href="{{ route('web.statistics.index') }}" class="nav-link {{ Request::path()=='manage-opes'?'activeCustom':'' }}" id="abc">
+                        <a href="{{ route('web.statistics.index') }}" class="nav-link {{ explode('/',Request::path())[0]=='statistics'?'activeCustom':'' }}" id="abc">
                             <i class="nav-icon fas fa fa-line-chart"></i>
                             <p>
                                 Thống kê, báo cáo

@@ -10,17 +10,18 @@ namespace App\Http\Controllers\Web;
 
 use Illuminate\Http\Request;
 use App\Models\RequestStaffs;
-use App\Models\Staff;
+use App\Models\User;
 use App\Http\Requests\requestRequest;
 use Auth;
 
 class StatisticsController extends AppController
 {
     protected $dirView = 'Web.Statistic.';
-    
+
     public function index()
     {
-        return view($this->dirView . 'index');
+        $infoAllListSurvey = User::getAllInfoListSurvey();
+        return view($this->dirView . 'index', compact('infoAllListSurvey'));
     }
 
 

@@ -98,6 +98,23 @@ class User extends AppModel
         return $surveyDetails;
     }
 
+    public static function getAllInfoListSurvey(){
+        $allListSurvey = self::where('job_id','<>', NULL)
+            ->with('jobusers')
+            ->orderBy('id')
+            ->get();
+        $allInfoListSurvey['job']['job'] = 0;
+        $allInfoListSurvey['job']['un_job'] = 0;
+        foreach ($allListSurvey as $value){
+            if ($value['jobusers']['job'] == JobUser::JOB){
+                $allInfoListSurvey['job']['job']++;
+            }else{
+                $allInfoListSurvey['job']['un_job']++;
+            }
+        }
+        return $allInfoListSurvey;
+    }
+
     public static function getListManager()
     {
         $listBom = self::where('role', self::ROLE_BOM)
