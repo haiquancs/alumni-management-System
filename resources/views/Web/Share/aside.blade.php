@@ -23,21 +23,21 @@
                     </li>
                 @endif
                 @if(\Illuminate\Support\Facades\Auth::user()->role == \App\Models\User::ROLE_ADMIN)
-                    <li class="nav-item has-treeview">
-                        <a href="#" class="nav-link {{ Request::path()=='manage-opes'?'activeCustom':'' }}" id="abc">
-                            <i class="nav-icon fas fa fa-line-chart"></i>
+                    <li class="nav-item">
+                        <a href="{{route('web.surveys.manage-surveys')}}" class="nav-link {{-- {{ explode('/',Request::path())[0]=='users'?'activeCustom':'' }} --}}">
+                            <i class="nav-icon fas fa fa-edit"></i>
                             <p>
-                                Thống kê, báo cáo
+                                Quản Lý Survey
                             </p>
                         </a>
                     </li>
                 @endif
                 @if(\Illuminate\Support\Facades\Auth::user()->role == \App\Models\User::ROLE_ADMIN)
-                    <li class="nav-item">
-                        <a href="#" class="nav-link {{-- {{ explode('/',Request::path())[0]=='users'?'activeCustom':'' }} --}}">
-                            <i class="nav-icon fas fa fa-edit"></i>
+                    <li class="nav-item has-treeview">
+                        <a href="{{ route('web.statistics.index') }}" class="nav-link {{ Request::path()=='manage-opes'?'activeCustom':'' }}" id="abc">
+                            <i class="nav-icon fas fa fa-line-chart"></i>
                             <p>
-                                Quản Lý Survey
+                                Thống kê, báo cáo
                             </p>
                         </a>
                     </li>

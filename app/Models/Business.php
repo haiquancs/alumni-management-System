@@ -17,6 +17,10 @@ class Business extends AppModel
         'deleted_id'
     ];
 
+    public static function getNameBusiness($businessId){
+        return self::select('business')->where('id',$businessId)->first();
+    }
+
     public static function getDepartment()
     {
         $departments = self::select('id', 'name')
@@ -26,10 +30,6 @@ class Business extends AppModel
             return [];
         }
         return $departments;
-    }
-
-    public static function getNameBusiness($businessId){
-        return self::select('business')->where('id',$businessId)->first();
     }
 
     public static function createDepartment(array $data)

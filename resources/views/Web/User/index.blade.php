@@ -85,6 +85,7 @@
                                 <th style="width: 17%">Email</th>
                                 <th style="width: 12%">Thời gian tốt nghiệp</th>
                                 <th>Tốt nghiệp chuyên ngành</th>
+                                <th>Trạng thái khảo sát</th>
                                 <th style="width: 10%">Thao tác</th>
                             </tr>
                             </thead>
@@ -113,6 +114,7 @@
                                         {{ $user['business']['business'] }}
                                         @endif
                                     </td>
+                                    @if(@$user['job_id'])<td style="background-color: green"> Đã làm khảo sát </td>@else<td style="background-color: red"> Chưa làm khảo sát </td>@endif
                                     <td>
                                         <a class="btn btn-success btn-sm" href="{{ route('web.users.show', $user['id']) }}">Xem</a>
                                     </td>

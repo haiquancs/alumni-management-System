@@ -45,7 +45,7 @@ Route::middleware(['AuthStaff'])
             'destroy' => 'web.surveys.destroy',
         ]]);
 
-        Route::get('manage-opes','OpesController@manageOpes')->name('web.opes.manage-opes');
+        Route::get('manage-surveys','SurveysController@manageSurveys')->name('web.surveys.manage-surveys');
         Route::get('all-opes','OpesController@opesStaff')->name('web.opes.opes-staff');
         Route::get('approval/{idOpesStaff}/{idStaff}', 'OpesController@approval')->name('web.opes.approval');
         Route::get('rejected/{idOpesStaff}/{idStaff}', 'OpesController@rejected')->name('web.opes.rejected');
@@ -94,14 +94,14 @@ Route::middleware(['AuthStaff'])
             'destroy' => 'web.grades.destroy',
         ]]);
 
-        Route::resource('request', 'RequestsController', ['names' => [
-            'index' => 'web.request.index',
-            'create' => 'web.request.create',
-            'store' => 'web.request.store',
-            'show' => 'web.request.show',
-            'edit' => 'web.request.edit',
-            'update' => 'web.request.update',
-            'destroy' => 'web.request.destroy',
+        Route::resource('statistics', 'StatisticsController', ['names' => [
+            'index' => 'web.statistics.index',
+            'create' => 'web.statistics.create',
+            'store' => 'web.statistics.store',
+            'show' => 'web.statistics.show',
+            'edit' => 'web.statistics.edit',
+            'update' => 'web.statistics.update',
+            'destroy' => 'web.statistics.destroy',
         ]]);
 
         Route::resource('document', 'DocumentsController', ['names' => [

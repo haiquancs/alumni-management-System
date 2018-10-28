@@ -20,7 +20,12 @@ class AuthController extends AppController
     public function login(Request $request)
     {
         if (Auth::check()) {
-            return redirect()->route('web.surveys.index');
+            if (Auth::user()->role == User::ROLE_ADMIN) {
+                return redirect()->route('web.surveys.manage-surveys');
+            }
+            if (Auth::user()->role == User::ROLE_STUDENT) {
+                return redirect()->route('web.surveys.index');
+            }
         }
         if ($request->isMethod('POST')) {
             //Xu li login
@@ -28,7 +33,12 @@ class AuthController extends AppController
             $password = $request['password'];
             $remember = empty($request['remember']) ? $request['remember'] : 0;
             if (Auth::attempt(['code' => $code, 'password' => $password], $remember)) {
-                return redirect()->route('web.surveys.index');
+                if (Auth::user()->role == User::ROLE_ADMIN) {
+                    return redirect()->route('web.surveys.manage-surveys');
+                }
+                if (Auth::user()->role == User::ROLE_STUDENT) {
+                    return redirect()->route('web.surveys.index');
+                }
             }
             return redirect()->route('web.auth.login')
                 ->withErrors(['MSV hoặc mật khẩu không chính xác!'])

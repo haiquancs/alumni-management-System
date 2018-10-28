@@ -104,7 +104,7 @@
                                 </tbody>
                             </table>
                             <div class="box-footer">
-                                <a class="btn btn-info" href="#">Cập nhật</a>
+                                <a class="btn btn-info" href="{{route('web.surveys.create')}}">Cập nhật</a>
                             </div>
                             @endif
                         </div>

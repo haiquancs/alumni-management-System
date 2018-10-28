@@ -14,15 +14,13 @@ use App\Models\Staff;
 use App\Http\Requests\requestRequest;
 use Auth;
 
-class RequestsController extends AppController
+class StatisticsController extends AppController
 {
-    protected $dirView = 'Web.Request.';
+    protected $dirView = 'Web.Statistic.';
     
     public function index()
     {
-        $requestStaff = RequestStaffs::getListRequest();
-        $allRequest = RequestStaffs::getAllRequest();
-        return view($this->dirView . 'index', compact('requestStaff', 'allRequest'));
+        return view($this->dirView . 'index');
     }
 
 

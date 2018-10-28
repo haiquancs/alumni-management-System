@@ -33,7 +33,7 @@ class JobUser extends AppModel
         self::TIME_JOB2 => 'Sau 1-6 tháng',
         self::TIME_JOB3 => 'Sau 6-12 tháng',
         self::TIME_JOB4 => 'Sau 12 tháng',
-        self::TIME_JOB5 => 'Khác',
+        self::TIME_JOB5 => 'Hơn 12 tháng',
     ];
 
     public static $introduceSource = [
@@ -124,9 +124,6 @@ class JobUser extends AppModel
         }
         if (!@$data['time_have_job']) {
             $errors['time_have_job'] = 'Bạn chưa chọn trường này';
-        }
-        if ($data['time_have_job'] == self::TIME_JOB5 && $data['time_have_job_else'] == NUll) {
-            $errors['time_have_job'] = 'Bạn chưa điền thời gian khác';
         }
         if (!@$data['type_company']) {
             $errors['type_company'] = 'Bạn chưa chọn trường này';

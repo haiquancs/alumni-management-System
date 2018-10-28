@@ -77,6 +77,27 @@ class User extends AppModel
         return $user;
     }
 
+    public static function getListSurvey($request){
+        $listSurveys = self::where('job_id','<>', NULL)
+            ->with('jobusers')
+            ->orderBy('id');
+        if (!empty($request['code'])) {
+            $listSurveys->where('code', 'like', '%' . $request['code'] . '%');
+        }
+        if (!empty($request['full_name'])) {
+            $listSurveys->where('full_name', 'like', '%' . $request['full_name'] . '%');
+        }
+        $listSurveys = $listSurveys->paginate(10);
+        return $listSurveys;
+    }
+
+    public static function showSurveyDetail($idUser){
+        $surveyDetails = self::where('id', $idUser)
+            ->with('jobusers')
+            ->get();
+        return $surveyDetails;
+    }
+
     public static function getListManager()
     {
         $listBom = self::where('role', self::ROLE_BOM)
@@ -309,6 +330,10 @@ class User extends AppModel
     public function business()
     {
         return $this->belongsTo(Business::class, 'graduation_business', 'id');
+    }
+
+    public function jobusers(){
+        return $this->belongsTo(JobUser::class, 'job_id', 'id');
     }
 
     public function opesStaff()

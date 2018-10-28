@@ -9,165 +9,96 @@
                 <div class="row mb-2">
                     <div class="col-sm-6">
                         <ol class="breadcrumb float-sm-left">
-                            <li class="breadcrumb-item"><a href="{{ route('web.opes.manage-opes') }}">OPES</a></li>
-                            <li class="breadcrumb-item active">Danh sách OPES</li>
+                            <li class="breadcrumb-item"><a href="{{ route('web.surveys.manage-surveys') }}">Quản lý Surveys</a>
+                            </li>
+                            <li class="breadcrumb-item active">Danh sách bản khảo sát</li>
                         </ol>
                     </div>
                 </div>
             </div><!-- /.container-fluid -->
         </section>
+
         <!-- Main content -->
-        {{-- Danh sách opes của mem với gm || gm với bom --}}
-        @if(isset($mySuborOpesStaffs))
-            @if(\Illuminate\Support\Facades\Auth::user()->role == \App\Models\Staff::ROLE_GM || \Illuminate\Support\Facades\Auth::user()->role == \App\Models\Staff::ROLE_BOM)
-                <section class="content">
-                    <div class="container-fluid">
-                        <div class="card card-default">
-                            <div class="card-header">
-                                @if(\Illuminate\Support\Facades\Auth::user()->role == \App\Models\Staff::ROLE_GM)
-                                    <h3 class="card-title">DANH SÁCH OPES CỦA MEM</h3>
-                                    <div class="card-tools">
-                                        <a class="btn btn-success btn-sm" style="color: white;" href="{{ route('web.opes.export-manage-opes-staff') }}">Xuất Excel</a>
+        <section class="content">
+            <div class="container-fluid">
+
+                <div class="card card-default">
+                    <div class="card-header">
+                        <h3 class="card-title">DANH SÁCH BẢN KHẢO SÁT ({{ $listSurveys->toArray()['total'] }})</h3>
+                        <div class="card-tools">
+                            <a class="btn btn-success btn-sm" style="color: white;" href="{{ route('web.users.export-user') }}">Xuất Excel</a>
+                        </div>
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <form action="{{ route('web.surveys.manage-surveys') }}" method="GET">
+                            <div class="row">
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <input class="form-control" name="code" id="code"
+                                               value="{{@$dataSearch['code']}}"
+                                               placeholder="Mã sinh viên"/>
                                     </div>
-                                @endif
-                                @if(\Illuminate\Support\Facades\Auth::user()->role == \App\Models\Staff::ROLE_BOM)
-                                    <h3 class="card-title">DANH SÁCH OPES CỦA GM</h3>
-                                        <div class="card-tools">
-                                            <a class="btn btn-success btn-sm" style="color: white;" href="{{ route('web.opes.export-manage-opes-staff') }}">Xuất Excel</a>
-                                        </div>
-                                @endif
-                            </div>
-                            <!-- /.card-header -->
-                            <div class="card-body">
-                                <form action="{{ route('web.opes.manage-opes') }}" method="GET">
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <div class="form-group">
-                                                <input class="form-control" name="code" id="code"
-                                                       value="{{@$dataSearch['code']}}"
-                                                       placeholder="Mã nhân viên"/>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <div class="form-group">
-                                                <input class="form-control" name="full_name" id="full_name"
-                                                       value="{{@$dataSearch['full_name']}}"
-                                                       placeholder="Tên nhân viên"/>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <div class="form-group">
-                                                <select class="form-control" id="year" name="year"
-                                                        style="width: 100%;">
-                                                    <option value="" selected>Năm</option>
-                                                    @foreach($years as $key=>$value)
-                                                        <option value="{{ $value }}"
-                                                                @if($value==@$dataSearch['year']) selected="selected"@endif>{{ $value }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-1">
-                                            <div class="form-group">
-                                                <select class="form-control" id="semester" name="semester"
-                                                        style="width: 100%;">
-                                                    <option value="" selected>Kỳ</option>
-                                                    @foreach(\App\Models\Staff::$semester as $key => $semester)
-                                                        <option value="{{ $key }}"
-                                                                @if($semester==@$dataSearch['semester']) selected="selected"@endif>{{ $semester }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-3">
-                                            <div class="form-group">
-                                                <select class="form-control" id="status" name="status"
-                                                        style="width: 100%;">
-                                                    <option value="" selected>Trạng thái</option>
-                                                    @foreach(\App\Models\OpesStaff::$status as $key => $status)
-                                                        <option value="{{ $key }}"
-                                                                @if($key==@$dataSearch['status']) selected="selected"@endif>{{ $status }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <button type="submit" class="btn btn-primary">Tìm kiếm</button>
-                                        </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <input class="form-control" name="full_name" id="full_name"
+                                               value="{{@$dataSearch['full_name']}}"
+                                               placeholder="Tên sinh viên"/>
                                     </div>
-                                </form>
-                                <!-- table yêu cầu tạo opes-->
-                                <div class="table-responsive">
-                                    <table class="table table-bordered table-hover" style="text-align: center">
-                                        <thead class="thead-light">
-                                        <tr>
-                                            <th style="width: 6%">STT</th>
-                                            <th style="width: 8%">Mã NV</th>
-                                            <th>Tên nhân viên</th>
-                                            <th style="width: 8%">STT OPES</th>
-                                            <th>Năm</th>
-                                            <th>Kỳ</th>
-                                            <th>Trạng thái</th>
-                                            <th style="width: 10%">Thao tác</th>
-                                        </tr>
-                                        </thead>
-                                        <?php
-                                        $i = 1;
-                                        $countNull = 0;
-                                        ?>
-                                        <tbody>
-                                        @foreach($mySuborOpesStaffs as $value)
-                                            @if($value['opes_staff'] != NULL)
-                                                <?php
-                                                $countNull++;
-                                                ?>
-                                            @endif
-                                        @endforeach
-                                        @if($countNull == 0)
-                                            <tr>
-                                                <td colspan="8">Không có dữ liệu</td>
-                                            </tr>
-                                        @endif
-                                        @foreach($mySuborOpesStaffs as $myStaffs)
-                                            @foreach($myStaffs['opes_staff'] as $k => $value)
-                                                <tr>
-                                                    @if($k == 0)
-                                                        <td style="vertical-align: middle;"
-                                                            rowspan="{{count($myStaffs['opes_staff'])}}">{{$i++}}</td>
-                                                        <td style="vertical-align: middle;"
-                                                            rowspan="{{count($myStaffs['opes_staff'])}}">{{$myStaffs['code']}}</td>
-                                                        <td style="vertical-align: middle;"
-                                                            rowspan="{{count($myStaffs['opes_staff'])}}">{{$myStaffs['full_name']}}</td>
-                                                    @endif
-                                                    <td>{{ $k+1 }}</td>
-                                                    <td>{{ $value['year'] }}</td>
-                                                    <td>{{ $value['semester'] }}</td>
-                                                    <td>{{ \App\Models\OpesStaff::$status[$value['status']] }}</td>
-                                                    <td style="text-align: center">
-                                                        <a class="btn btn-info btn-sm"
-                                                           href="{{ route('web.opes.show', $value['id']) }}">Xem</a>
-                                                        {{--<a class="btn btn-success btn-sm"--}}
-                                                           {{--href="{{ route('web.opes.export-opes', $value['id']) }}">Xuất Excel</a>   --}}
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        @endforeach
-                                        </tbody>
-                                    </table>
-                                    <!-- /.table tạo opes-->
-                                    {{--<div style="margin-top: 10px; float: right">--}}
-                                    {{--{{ $mySuborOpesStaffs->links('Web.Share.paginate') }}--}}
-                                    {{--</div>--}}
+                                </div>
+                                <div class="col-md-2">
+                                    <button type="submit" class="btn btn-primary">Tìm kiếm</button>
                                 </div>
                             </div>
-                            <!--/. card-body-->
+                            <!-- /.col -->
+                        </form>
+                        <!-- table yêu cầu tạo opes-->
+                        <table class="table table-bordered table-hover" style="text-align: center">
+                            <thead class="thead-light">
+                            <tr>
+                                <th style="width: 5%">STT</th>
+                                <th style="width: 8%">Mã sinh viên</th>
+                                <th style="width: 10%">Tên sinh viên</th>
+                                <th style="width: 10%">Thời gian cập nhật</th>
+                                <th style="width: 10%">Thông tin bản khảo sát</th>
+                                <th style="width: 10%">Thao tác</th>
+                            </tr>
+                            </thead>
+                            <?php $i = ($listSurveys->currentpage() - 1) * $listSurveys->perpage() + 1;?>
+                            <tbody>
+                            @if($listSurveys->total() == 0)
+                                <tr>
+                                    <td colspan="9">Không có dữ liệu</td>
+                                </tr>
+                            @endif
+                            @foreach($listSurveys as $survey)
+                                <tr>
+                                    <td>{{ $i++ }}</td>
+                                    <td>{{ $survey['code'] }}</td>
+                                    <td>{{ $survey['full_name'] }}</td>
+                                    <td>{{ $survey['jobusers']['updated_at'] }}</td>
+                                    <td>Công việc : {{ $survey['jobusers']['name_job'] }}...</td>
+                                    <td>
+                                        <a class="btn btn-success btn-sm" href="{{ route('web.surveys.show', $survey['id']) }}">Xem Chi Tiết</a>
+                                    </td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                        <!-- /.table tạo opes-->
+                        <div style="margin-top: 10px; float: right">
+                            {{ $listSurveys->links('Web.Share.paginate') }}
                         </div>
-                        <!-- /.card card-default -->
                     </div>
-                    <!-- /.container-fluid -->
-                </section>
-        @endif
-    @endif
-    <!-- /.content -->
+                    <!--/. card-body-->
+                </div>
+                <!-- /.card card-default -->
+            </div>
+            <!-- /.container-fluid -->
+        </section>
+        <!--/. content-->
     </div>
-@endsection        
+    <!-- /.content -->
+
+@endsection
