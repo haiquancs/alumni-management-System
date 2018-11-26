@@ -1,6 +1,6 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <!-- Brand Logo -->
-    <a href="@if(\Illuminate\Support\Facades\Auth::user()->role == \App\Models\User::ROLE_STUDENT){{route('web.surveys.index')}}@else#@endif" class="brand-link"  style="margin-left: 16px">
+    <a href="@if(\Illuminate\Support\Facades\Auth::user()->role == \App\Models\User::ROLE_STUDENT){{route('web.surveys.index')}}@else {{route('web.surveys.manage-surveys')}} @endif" class="brand-link"  style="margin-left: 16px">
         <img src="{{asset('favicon.ico')}}" alt="User Avatar" class="mr-3 img-circle" width="40px" height="40px">
         <span class="brand-text font-weight-light">CỰU SINH VIÊN</span>
     </a>

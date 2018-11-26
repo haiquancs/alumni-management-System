@@ -24,7 +24,7 @@
 
                 <div class="card card-default">
                     <div class="card-header">
-                        <h3 class="card-title">DANH SÁCH TÀI KHOẢN</h3>
+                        <h3 class="card-title">DANH SÁCH TÀI KHOẢN ({{ $users->toArray()['total'] }})</h3>
                         <div class="card-tools">
                             <a class="btn btn-success btn-sm" style="color: white;" href="{{ route('web.users.export-user') }}">Xuất Excel</a>
                         </div>
@@ -52,18 +52,27 @@
                                         <select class="form-control" name="graduation_year" id="graduation_year">
                                             <option value="" selected>Thời gian tốt nghiệp</option>
                                             @for($year = 2018; $year >= 2000 ; $year --)
-                                                <option value="{{ $year }}" >{{ $year }}</option>
+                                                <option value="{{ $year }}" @if($year == @$dataSearch['graduation_year']) selected @endif>{{ $year }}</option>
                                             @endfor
                                         </select>
                                     </div>
                                 </div>
                                 <div class="col-md-2">
                                     <div class="form-group">
-                                        <select class="form-control" name="graduation_business" id="graduation_business" style="width: 95%;">
+                                        <select class="form-control" name="graduation_business" id="graduation_business" style="width: 100%;">
                                             <option value="" selected>Chuyên ngành</option>
                                             @foreach($business as $business)
-                                                <option value="{{ $business->id }}" >{{ $business->business }}</option>
+                                                <option value="{{ $business->id }}" @if($business->id == @$dataSearch['graduation_business']) selected @endif>{{ $business->business }}</option>
                                             @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-1.5">
+                                    <div class="form-group">
+                                        <select class="form-control" name="survey" id="graduation_business" style="width: 100%;">
+                                            <option value="" selected>Khảo sát</option>
+                                            <option value="1" @if(@$dataSearch['survey'] == 1) selected @endif>Đã làm khảo sát</option>
+                                            <option value="2" @if(@$dataSearch['survey'] == 2) selected @endif>Chưa làm khảo sát</option>
                                         </select>
                                     </div>
                                 </div>
@@ -93,7 +102,7 @@
                             <tbody>
                             @if($users->total() == 0)
                                 <tr>
-                                    <td colspan="9">Không có dữ liệu</td>
+                                    <td colspan="10">Không có dữ liệu</td>
                                 </tr>
                             @endif
                             @foreach($users as $user)
@@ -124,7 +133,7 @@
                         </table>
                         <!-- /.table tạo opes-->
                         <div style="margin-top: 10px; float: right">
-                            {{ $users->links('Web.Share.paginate') }}
+                            {{ $users->links('Web.Share.paginate',['code' => @$dataSearch['code'],'full_name' => @$dataSearch['full_name'],'graduation_year' => @$dataSearch['graduation_year'],'graduation_business' => @$dataSearch['graduation_business'],'survey' => @$dataSearch['survey'],]) }}
                         </div>
                     </div>
                     <!--/. card-body-->

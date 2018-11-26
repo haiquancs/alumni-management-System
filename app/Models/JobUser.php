@@ -59,12 +59,15 @@ class JobUser extends AppModel
 
     public static function updateJobUser($data, $userId)
     {
-//        dd($data['time_have_job']);
-//        $getIdTypeCompany = TypeCompany::select('id')->get();
-//        dd($getIdTypeCompany->toArray());
+        $getIdJobUserThisGuy = User::where('id', $userId)->pluck('job_id')->first();
         if ($data['job'] == self::UN_JOB) {
             $job = array('job' => self::UN_JOB);
-            $getIdJob = self::create($job)->id;
+            if (@$getIdJobUserThisGuy) {
+                self::where('id', $getIdJobUserThisGuy)->update(['job' => $job['job']]);
+            } else {
+                $getIdJob = self::create($job)->id;
+                User::where('id', $userId)->update(['job_id' => $getIdJob]);
+            }
         }
         if ($data['job'] == self::JOB) {
             $job = array(
@@ -77,41 +80,56 @@ class JobUser extends AppModel
             } else {
                 $job['time_have_job'] = $data['time_have_job'];
             }
-            if(empty(TypeCompany::where('id',$data['type_company'])->get()->toArray())){
-                $getIdNewTypeCompany = TypeCompany::create(array('type'=>$data['type_company_else']))->id;
-                $getIdNewTypeDetailCompany = TypeDetailCompany::create(array('type_company_id'=>$getIdNewTypeCompany))->id;
+            if (empty(TypeCompany::where('id', $data['type_company'])->get()->toArray())) {
+                $getIdNewTypeCompany = TypeCompany::create(array('type' => $data['type_company_else']))->id;
+                $getIdNewTypeDetailCompany = TypeDetailCompany::create(array('type_company_id' => $getIdNewTypeCompany))->id;
                 $job['type_company_detail_id'] = $getIdNewTypeDetailCompany;
-            }elseif($data['type_company']==1){
+            } elseif ($data['type_company'] == 1) {
                 $job['type_company_detail_id'] = $data['agencies'];
-            }elseif($data['type_company']==2){
+            } elseif ($data['type_company'] == 2) {
                 $job['type_company_detail_id'] = $data['enterprise'];
-            }elseif($data['type_company']==3){
+            } elseif ($data['type_company'] == 3) {
                 $job['type_company_detail_id'] = $data['non_organizations'];
             }
-            if(empty(RollJob::where('id',$data['roll_job'])->get()->toArray())){
-                $getIdNewRollJob = RollJob::create(array('roll'=>$data['roll_job_else']))->id;
+            if (empty(RollJob::where('id', $data['roll_job'])->get()->toArray())) {
+                $getIdNewRollJob = RollJob::create(array('roll' => $data['roll_job_else']))->id;
                 $job['roll_job_id'] = $getIdNewRollJob;
-            }else{
+            } else {
                 $job['roll_job_id'] = $data['roll_job'];
             }
-            if(@$data['introduce_source']){
+            if (@$data['introduce_source']) {
                 $job['introduce_source'] = $data['introduce_source'];
             }
-            if(@$data['salary']){
+            if (@$data['salary']) {
                 $job['salary_id'] = $data['salary'];
             }
-            if(@$data['traning']){
+            if (@$data['traning']) {
                 $job['traning'] = implode(",", $data['traning']);
             }
-            $getIdJob = self::create($job)->id;
+//            Lưu lại
+            if (@$getIdJobUserThisGuy) {
+                self::where('id', $getIdJobUserThisGuy)
+                    ->update([
+                        'job' => $job['job'],
+                        'name_job' => $job['name_job'],
+                        'time_have_job' => $job['time_have_job'],
+                        'type_company_detail_id' => $job['type_company_detail_id'],
+                        'roll_job_id' => $job['roll_job_id'],
+                        'introduce_source' => $job['introduce_source'],
+                        'salary_id' => $job['salary_id'],
+                        'traning' => $job['traning'],
+                    ]);
+            } else {
+                $getIdJob = self::create($job)->id;
+                User::where('id', $userId)->update(['job_id' => $getIdJob]);
+            }
         }
-        User::where('id', $userId)->update(['job_id' => $getIdJob]);
     }
 
     public static function getJobInfoUsers($jobIdUser)
     {
         return self::where('id', $jobIdUser)
-            ->with(['typeDetailCompany' => function ($query){
+            ->with(['typeDetailCompany' => function ($query) {
                 $query->with(['typeCompany']);
             }])->with(['rollJob'])->with(['salary'])->first();
     }
@@ -356,15 +374,18 @@ class JobUser extends AppModel
         return $this->belongsTo(EvaluationCriteria::class, 'evaluation_criteria_id', 'id');
     }
 
-    public function typeDetailCompany(){
+    public function typeDetailCompany()
+    {
         return $this->belongsTo(TypeDetailCompany::class, 'type_company_detail_id', 'id');
     }
 
-    public function rollJob(){
+    public function rollJob()
+    {
         return $this->belongsTo(RollJob::class, 'roll_job_id', 'id');
     }
 
-    public function salary(){
+    public function salary()
+    {
         return $this->belongsTo(Salary::class, 'salary_id', 'id');
     }
 }

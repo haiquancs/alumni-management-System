@@ -64,11 +64,33 @@
                             <!-- /.card-body -->
                         </div>
                         <!-- /.card -->
-
                     </div>
                     <!-- /.col (LEFT) -->
                     <div class="col-md-6">
                         <!-- LINE CHART -->
+                        <div class="card card-danger">
+                            <div class="card-header" style="background-color: skyblue">
+                                <h3 class="card-title">Tin mới trong ngày</h3>
+
+                                <div class="card-tools">
+                                    <button type="button" class="btn btn-tool" data-widget="collapse"><i
+                                                class="fa fa-minus"></i>
+                                    </button>
+                                    <button type="button" class="btn btn-tool" data-widget="remove"><i
+                                                class="fa fa-times"></i></button>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <div style="height:389px">
+                                    <div id="news" style="height:389px; overflow-x: hidden;overflow-y: scroll;">
+                                        @foreach($getNewsDay as $value)
+                                            <div class="row" style="padding-bottom: 5px;padding-left: 8px"><div style="background-color: #B9EBEC; border-radius: 4px; width: 95%;  padding: 10px 10px 10px 10px">{{$value}}</div></div>
+                                        @endforeach
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
                         <div class="card card-info">
                             <div class="card-header">
                                 <h3 class="card-title">Line Chart</h3>
@@ -122,167 +144,167 @@
         <!-- /.content -->
     </div>
     {{--<div class="content">--}}
-        {{--<!-- Content Header (Page header) -->--}}
-        {{--<section class="content-header">--}}
-            {{--<div class="container-fluid">--}}
-                {{--<div class="row mb-2">--}}
-                    {{--<div class="col-sm-6">--}}
-                        {{--<h1>Flot Charts</h1>--}}
-                    {{--</div>--}}
-                    {{--<div class="col-sm-6">--}}
-                        {{--<ol class="breadcrumb float-sm-right">--}}
-                            {{--<li class="breadcrumb-item"><a href="#">Home</a></li>--}}
-                            {{--<li class="breadcrumb-item active">Flot</li>--}}
-                        {{--</ol>--}}
-                    {{--</div>--}}
-                {{--</div>--}}
-            {{--</div><!-- /.container-fluid -->--}}
-        {{--</section>--}}
+    {{--<!-- Content Header (Page header) -->--}}
+    {{--<section class="content-header">--}}
+    {{--<div class="container-fluid">--}}
+    {{--<div class="row mb-2">--}}
+    {{--<div class="col-sm-6">--}}
+    {{--<h1>Flot Charts</h1>--}}
+    {{--</div>--}}
+    {{--<div class="col-sm-6">--}}
+    {{--<ol class="breadcrumb float-sm-right">--}}
+    {{--<li class="breadcrumb-item"><a href="#">Home</a></li>--}}
+    {{--<li class="breadcrumb-item active">Flot</li>--}}
+    {{--</ol>--}}
+    {{--</div>--}}
+    {{--</div>--}}
+    {{--</div><!-- /.container-fluid -->--}}
+    {{--</section>--}}
 
-        {{--<!-- Main content -->--}}
-        {{--<section class="content">--}}
-            {{--<div class="container-fluid">--}}
-                {{--<div class="row">--}}
-                    {{--<div class="col-12">--}}
-                        {{--<!-- interactive chart -->--}}
-                        {{--<div class="card card-primary card-outline">--}}
-                            {{--<div class="card-header">--}}
-                                {{--<h3 class="card-title">--}}
-                                    {{--<i class="fa fa-bar-chart-o"></i>--}}
-                                    {{--Interactive Area Chart--}}
-                                {{--</h3>--}}
+    {{--<!-- Main content -->--}}
+    {{--<section class="content">--}}
+    {{--<div class="container-fluid">--}}
+    {{--<div class="row">--}}
+    {{--<div class="col-12">--}}
+    {{--<!-- interactive chart -->--}}
+    {{--<div class="card card-primary card-outline">--}}
+    {{--<div class="card-header">--}}
+    {{--<h3 class="card-title">--}}
+    {{--<i class="fa fa-bar-chart-o"></i>--}}
+    {{--Interactive Area Chart--}}
+    {{--</h3>--}}
 
-                                {{--<div class="card-tools">--}}
-                                    {{--Real time--}}
-                                    {{--<div class="btn-group" id="realtime" data-toggle="btn-toggle">--}}
-                                        {{--<button type="button" class="btn btn-default btn-sm active" data-toggle="on">--}}
-                                            {{--On--}}
-                                        {{--</button>--}}
-                                        {{--<button type="button" class="btn btn-default btn-sm" data-toggle="off">Off--}}
-                                        {{--</button>--}}
-                                    {{--</div>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                            {{--<div class="card-body">--}}
-                                {{--<div id="interactive" style="height: 300px;"></div>--}}
-                            {{--</div>--}}
-                            {{--<!-- /.card-body-->--}}
-                        {{--</div>--}}
-                        {{--<!-- /.card -->--}}
+    {{--<div class="card-tools">--}}
+    {{--Real time--}}
+    {{--<div class="btn-group" id="realtime" data-toggle="btn-toggle">--}}
+    {{--<button type="button" class="btn btn-default btn-sm active" data-toggle="on">--}}
+    {{--On--}}
+    {{--</button>--}}
+    {{--<button type="button" class="btn btn-default btn-sm" data-toggle="off">Off--}}
+    {{--</button>--}}
+    {{--</div>--}}
+    {{--</div>--}}
+    {{--</div>--}}
+    {{--<div class="card-body">--}}
+    {{--<div id="interactive" style="height: 300px;"></div>--}}
+    {{--</div>--}}
+    {{--<!-- /.card-body-->--}}
+    {{--</div>--}}
+    {{--<!-- /.card -->--}}
 
-                    {{--</div>--}}
-                    {{--<!-- /.col -->--}}
-                {{--</div>--}}
-                {{--<!-- /.row -->--}}
+    {{--</div>--}}
+    {{--<!-- /.col -->--}}
+    {{--</div>--}}
+    {{--<!-- /.row -->--}}
 
-                {{--<div class="row">--}}
-                    {{--<div class="col-md-6">--}}
-                        {{--<!-- Line chart -->--}}
-                        {{--<div class="card card-primary card-outline">--}}
-                            {{--<div class="card-header">--}}
-                                {{--<h3 class="card-title">--}}
-                                    {{--<i class="fa fa-bar-chart-o"></i>--}}
-                                    {{--Line Chart--}}
-                                {{--</h3>--}}
+    {{--<div class="row">--}}
+    {{--<div class="col-md-6">--}}
+    {{--<!-- Line chart -->--}}
+    {{--<div class="card card-primary card-outline">--}}
+    {{--<div class="card-header">--}}
+    {{--<h3 class="card-title">--}}
+    {{--<i class="fa fa-bar-chart-o"></i>--}}
+    {{--Line Chart--}}
+    {{--</h3>--}}
 
-                                {{--<div class="card-tools">--}}
-                                    {{--<button type="button" class="btn btn-tool" data-widget="collapse"><i--}}
-                                                {{--class="fa fa-minus"></i>--}}
-                                    {{--</button>--}}
-                                    {{--<button type="button" class="btn btn-tool" data-widget="remove"><i--}}
-                                                {{--class="fa fa-times"></i>--}}
-                                    {{--</button>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                            {{--<div class="card-body">--}}
-                                {{--<div id="line-chart" style="height: 300px;"></div>--}}
-                            {{--</div>--}}
-                            {{--<!-- /.card-body-->--}}
-                        {{--</div>--}}
-                        {{--<!-- /.card -->--}}
+    {{--<div class="card-tools">--}}
+    {{--<button type="button" class="btn btn-tool" data-widget="collapse"><i--}}
+    {{--class="fa fa-minus"></i>--}}
+    {{--</button>--}}
+    {{--<button type="button" class="btn btn-tool" data-widget="remove"><i--}}
+    {{--class="fa fa-times"></i>--}}
+    {{--</button>--}}
+    {{--</div>--}}
+    {{--</div>--}}
+    {{--<div class="card-body">--}}
+    {{--<div id="line-chart" style="height: 300px;"></div>--}}
+    {{--</div>--}}
+    {{--<!-- /.card-body-->--}}
+    {{--</div>--}}
+    {{--<!-- /.card -->--}}
 
-                        {{--<!-- Area chart -->--}}
-                        {{--<div class="card card-primary card-outline">--}}
-                            {{--<div class="card-header">--}}
-                                {{--<h3 class="card-title">--}}
-                                    {{--<i class="fa fa-bar-chart-o"></i>--}}
-                                    {{--Area Chart--}}
-                                {{--</h3>--}}
+    {{--<!-- Area chart -->--}}
+    {{--<div class="card card-primary card-outline">--}}
+    {{--<div class="card-header">--}}
+    {{--<h3 class="card-title">--}}
+    {{--<i class="fa fa-bar-chart-o"></i>--}}
+    {{--Area Chart--}}
+    {{--</h3>--}}
 
-                                {{--<div class="card-tools">--}}
-                                    {{--<button type="button" class="btn btn-tool" data-widget="collapse"><i--}}
-                                                {{--class="fa fa-minus"></i>--}}
-                                    {{--</button>--}}
-                                    {{--<button type="button" class="btn btn-tool" data-widget="remove"><i--}}
-                                                {{--class="fa fa-times"></i>--}}
-                                    {{--</button>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                            {{--<div class="card-body">--}}
-                                {{--<div id="area-chart" style="height: 338px;" class="full-width-chart"></div>--}}
-                            {{--</div>--}}
-                            {{--<!-- /.card-body-->--}}
-                        {{--</div>--}}
-                        {{--<!-- /.card -->--}}
+    {{--<div class="card-tools">--}}
+    {{--<button type="button" class="btn btn-tool" data-widget="collapse"><i--}}
+    {{--class="fa fa-minus"></i>--}}
+    {{--</button>--}}
+    {{--<button type="button" class="btn btn-tool" data-widget="remove"><i--}}
+    {{--class="fa fa-times"></i>--}}
+    {{--</button>--}}
+    {{--</div>--}}
+    {{--</div>--}}
+    {{--<div class="card-body">--}}
+    {{--<div id="area-chart" style="height: 338px;" class="full-width-chart"></div>--}}
+    {{--</div>--}}
+    {{--<!-- /.card-body-->--}}
+    {{--</div>--}}
+    {{--<!-- /.card -->--}}
 
-                    {{--</div>--}}
-                    {{--<!-- /.col -->--}}
+    {{--</div>--}}
+    {{--<!-- /.col -->--}}
 
-                    {{--<div class="col-md-6">--}}
-                        {{--<!-- Bar chart -->--}}
-                        {{--<div class="card card-primary card-outline">--}}
-                            {{--<div class="card-header">--}}
-                                {{--<h3 class="card-title">--}}
-                                    {{--<i class="fa fa-bar-chart-o"></i>--}}
-                                    {{--Bar Chart--}}
-                                {{--</h3>--}}
+    {{--<div class="col-md-6">--}}
+    {{--<!-- Bar chart -->--}}
+    {{--<div class="card card-primary card-outline">--}}
+    {{--<div class="card-header">--}}
+    {{--<h3 class="card-title">--}}
+    {{--<i class="fa fa-bar-chart-o"></i>--}}
+    {{--Bar Chart--}}
+    {{--</h3>--}}
 
-                                {{--<div class="card-tools">--}}
-                                    {{--<button type="button" class="btn btn-tool" data-widget="collapse">--}}
-                                        {{--<i class="fa fa-minus"></i>--}}
-                                    {{--</button>--}}
-                                    {{--<button type="button" class="btn btn-tool" data-widget="remove">--}}
-                                        {{--<i class="fa fa-times"></i>--}}
-                                    {{--</button>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                            {{--<div class="card-body">--}}
-                                {{--<div id="bar-chart" style="height: 300px;"></div>--}}
-                            {{--</div>--}}
-                            {{--<!-- /.card-body-->--}}
-                        {{--</div>--}}
-                        {{--<!-- /.card -->--}}
+    {{--<div class="card-tools">--}}
+    {{--<button type="button" class="btn btn-tool" data-widget="collapse">--}}
+    {{--<i class="fa fa-minus"></i>--}}
+    {{--</button>--}}
+    {{--<button type="button" class="btn btn-tool" data-widget="remove">--}}
+    {{--<i class="fa fa-times"></i>--}}
+    {{--</button>--}}
+    {{--</div>--}}
+    {{--</div>--}}
+    {{--<div class="card-body">--}}
+    {{--<div id="bar-chart" style="height: 300px;"></div>--}}
+    {{--</div>--}}
+    {{--<!-- /.card-body-->--}}
+    {{--</div>--}}
+    {{--<!-- /.card -->--}}
 
-                        {{--<!-- Donut chart -->--}}
-                        {{--<div class="card card-primary card-outline">--}}
-                            {{--<div class="card-header">--}}
-                                {{--<h3 class="card-title">--}}
-                                    {{--<i class="fa fa-bar-chart-o"></i>--}}
-                                    {{--Donut Chart--}}
-                                {{--</h3>--}}
+    {{--<!-- Donut chart -->--}}
+    {{--<div class="card card-primary card-outline">--}}
+    {{--<div class="card-header">--}}
+    {{--<h3 class="card-title">--}}
+    {{--<i class="fa fa-bar-chart-o"></i>--}}
+    {{--Donut Chart--}}
+    {{--</h3>--}}
 
-                                {{--<div class="card-tools">--}}
-                                    {{--<button type="button" class="btn btn-tool" data-widget="collapse"><i--}}
-                                                {{--class="fa fa-minus"></i>--}}
-                                    {{--</button>--}}
-                                    {{--<button type="button" class="btn btn-tool" data-widget="remove"><i--}}
-                                                {{--class="fa fa-times"></i>--}}
-                                    {{--</button>--}}
-                                {{--</div>--}}
-                            {{--</div>--}}
-                            {{--<div class="card-body">--}}
-                                {{--<div id="donut-chart" style="height: 300px;"></div>--}}
-                            {{--</div>--}}
-                            {{--<!-- /.card-body-->--}}
-                        {{--</div>--}}
-                        {{--<!-- /.card -->--}}
-                    {{--</div>--}}
-                    {{--<!-- /.col -->--}}
-                {{--</div>--}}
-                {{--<!-- /.row -->--}}
-            {{--</div><!-- /.container-fluid -->--}}
-        {{--</section>--}}
-        {{--<!-- /.content -->--}}
+    {{--<div class="card-tools">--}}
+    {{--<button type="button" class="btn btn-tool" data-widget="collapse"><i--}}
+    {{--class="fa fa-minus"></i>--}}
+    {{--</button>--}}
+    {{--<button type="button" class="btn btn-tool" data-widget="remove"><i--}}
+    {{--class="fa fa-times"></i>--}}
+    {{--</button>--}}
+    {{--</div>--}}
+    {{--</div>--}}
+    {{--<div class="card-body">--}}
+    {{--<div id="donut-chart" style="height: 300px;"></div>--}}
+    {{--</div>--}}
+    {{--<!-- /.card-body-->--}}
+    {{--</div>--}}
+    {{--<!-- /.card -->--}}
+    {{--</div>--}}
+    {{--<!-- /.col -->--}}
+    {{--</div>--}}
+    {{--<!-- /.row -->--}}
+    {{--</div><!-- /.container-fluid -->--}}
+    {{--</section>--}}
+    {{--<!-- /.content -->--}}
     {{--</div>--}}
     <!-- jQuery -->
     <script src="{{asset('js/alumi/js/jquery.min.js')}}"></script>
@@ -343,7 +365,7 @@
                         pointStrokeColor: 'rgba(60,141,188,1)',
                         pointHighlightFill: '#fff',
                         pointHighlightStroke: 'rgba(60,141,188,1)',
-                        data: [0, 0, 0, 0, 0, 0, 0, 0, 0, 600, 0, 0]
+                        data: [100, 60, 220, 400, 350, 700, 500, 900, 500, 400, 400, 900]
                     }
                 ]
             }
@@ -446,7 +468,6 @@
             //Create pie or douhnut chart
             // You can switch between pie and douhnut using the method below.
             pieChart.Doughnut(PieData, pieOptions)
-
 
 
             //-------------

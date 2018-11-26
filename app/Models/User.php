@@ -54,10 +54,9 @@ class User extends AppModel
 
     public static function getUser($request)
     {
-        // dd($request->toArray());
         $user = self::select()->with(['business' => function ($qr) {
-                $qr->select('id', 'business');
-            }])->orderBy('code');
+            $qr->select('id', 'business');
+        }])->orderBy('code');
         if (!empty($request['code'])) {
             $user->where('code', 'like', '%' . $request['code'] . '%');
         }
@@ -70,6 +69,12 @@ class User extends AppModel
         if (!empty($request['graduation_business'])) {
             $user = $user->where('graduation_business', $request['graduation_business']);
         }
+        if (!empty($request['survey'])) {
+            if ($request['survey'] == 1)
+                $user = $user->whereNotNull('job_id');
+            if ($request['survey'] == 2)
+                $user = $user->whereNull('job_id');
+        }
         $user = $user->paginate(10);
         if (empty($user)) {
             return [];
@@ -77,8 +82,9 @@ class User extends AppModel
         return $user;
     }
 
-    public static function getListSurvey($request){
-        $listSurveys = self::where('job_id','<>', NULL)
+    public static function getListSurvey($request)
+    {
+        $listSurveys = self::whereNotNull('job_id')
             ->with('jobusers')
             ->orderBy('id');
         if (!empty($request['code'])) {
@@ -91,24 +97,53 @@ class User extends AppModel
         return $listSurveys;
     }
 
-    public static function showSurveyDetail($idUser){
+    public static function getNewsDay()
+    {
+        $listSurveys = self::join('job_users', 'users.job_id', '=', 'job_users.id')
+            ->orderBy('job_users.updated_at', 'desc')->get();
+        $now = Carbon::now()->toDateString();
+        $listNewsDay = [];
+        foreach ($listSurveys as $value) {
+            $getDayCreate = explode(' ', $value['created_at']);
+            $getDayCreate = $getDayCreate[0];
+            $getDayUpdate = explode(' ', $value['updated_at']);
+            $getDayUpdate = $getDayUpdate[0];
+            if ($getDayUpdate == $now) {
+                if ($value['created_at'] == $value['updated_at']) {
+                    $listNewsDay[] = "SV " . $value['full_name'] . " - " . $value['code'] . " đã gửi bản khảo sát mới (" . $value['updated_at'] . ")";
+                }else{
+                    if ($getDayCreate == $now ){
+                        $listNewsDay[] = "SV " . $value['full_name'] . " - " . $value['code'] . " đã cập nhật lại bản khảo sát (" . $value['updated_at'] . ")";
+                        $listNewsDay[] = "SV " . $value['full_name'] . " - " . $value['code'] . " đã gửi bản khảo sát mới (" . $value['created_at'] . ")";
+                    }else{
+                        $listNewsDay[] = "SV " . $value['full_name'] . " - " . $value['code'] . " đã cập nhật lại bản khảo sát (" . $value['updated_at'] . ")";
+                    }
+                }
+            }
+        }
+        return $listNewsDay;
+    }
+
+    public static function showSurveyDetail($idUser)
+    {
         $surveyDetails = self::where('id', $idUser)
             ->with('jobusers')
             ->get();
         return $surveyDetails;
     }
 
-    public static function getAllInfoListSurvey(){
-        $allListSurvey = self::where('job_id','<>', NULL)
+    public static function getAllInfoListSurvey()
+    {
+        $allListSurvey = self::where('job_id', '<>', NULL)
             ->with('jobusers')
             ->orderBy('id')
             ->get();
         $allInfoListSurvey['job']['job'] = 0;
         $allInfoListSurvey['job']['un_job'] = 0;
-        foreach ($allListSurvey as $value){
-            if ($value['jobusers']['job'] == JobUser::JOB){
+        foreach ($allListSurvey as $value) {
+            if ($value['jobusers']['job'] == JobUser::JOB) {
                 $allInfoListSurvey['job']['job']++;
-            }else{
+            } else {
                 $allInfoListSurvey['job']['un_job']++;
             }
         }
@@ -184,7 +219,7 @@ class User extends AppModel
 
     public static function showUser($userId)
     {
-        $user = self::where('id',$userId)
+        $user = self::where('id', $userId)
             ->with(['business' => function ($qr) {
                 $qr->select('id', 'business');
             }])->first();
@@ -237,9 +272,9 @@ class User extends AppModel
 
     public static function createUser()
     {
-        for ($i=14020000; $i < 14020020; $i++) { 
+        for ($i = 14020000; $i < 14020020; $i++) {
             $newUser = array(
-                'code' => $i, 
+                'code' => $i,
                 'first_name' => NULL,
                 'last_name' => NULL,
                 'full_name' => NULL,
@@ -349,7 +384,8 @@ class User extends AppModel
         return $this->belongsTo(Business::class, 'graduation_business', 'id');
     }
 
-    public function jobusers(){
+    public function jobusers()
+    {
         return $this->belongsTo(JobUser::class, 'job_id', 'id');
     }
 

@@ -14,3 +14,20 @@
 .table-user-information > tbody > tr > td {
     border-top: 0;
 }
+
+/* width */
+#news::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+#news::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+}
+
+/* Handle */
+#news::-webkit-scrollbar-thumb {
+    background: skyblue;
+    border-radius: 10px;
+}

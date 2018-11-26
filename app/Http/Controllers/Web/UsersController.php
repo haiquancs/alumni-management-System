@@ -74,6 +74,7 @@ class UsersController extends AppController
     public function update(UserRequest $request, $userId)
     {
         User::updateUser($request, $userId);
+        return redirect()->route('web.surveys.index');
     }
 
     public function exportUser(){

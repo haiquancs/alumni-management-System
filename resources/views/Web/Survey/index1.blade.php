@@ -60,6 +60,7 @@
                                 <th style="width: 5%">STT</th>
                                 <th style="width: 8%">Mã sinh viên</th>
                                 <th style="width: 10%">Tên sinh viên</th>
+                                <th style="width: 10%">Thời gian tạo</th>
                                 <th style="width: 10%">Thời gian cập nhật</th>
                                 <th style="width: 10%">Thông tin bản khảo sát</th>
                                 <th style="width: 10%">Thao tác</th>
@@ -77,7 +78,8 @@
                                     <td>{{ $i++ }}</td>
                                     <td>{{ $survey['code'] }}</td>
                                     <td>{{ $survey['full_name'] }}</td>
-                                    <td>{{ $survey['jobusers']['updated_at'] }}</td>
+                                    <td>{{ $survey['jobusers']['created_at'] }}</td>
+                                    <td>@if($survey['jobusers']['created_at'] != $survey['jobusers']['updated_at']) {{ $survey['jobusers']['updated_at'] }} @endif</td>
                                     <td>Công việc : {{ $survey['jobusers']['name_job'] }}...</td>
                                     <td>
                                         <a class="btn btn-success btn-sm" href="{{ route('web.surveys.show', $survey['id']) }}">Xem Chi Tiết</a>
@@ -88,7 +90,7 @@
                         </table>
                         <!-- /.table tạo opes-->
                         <div style="margin-top: 10px; float: right">
-                            {{ $listSurveys->links('Web.Share.paginate') }}
+                            {{ $listSurveys->links('Web.Share.paginate',['code' => @$dataSearch['code'],'full_name' => @$dataSearch['full_name'],'graduation_year' => @$dataSearch['graduation_year'],'graduation_business' => @$dataSearch['graduation_business'],'survey' => @$dataSearch['survey'],]) }}
                         </div>
                     </div>
                     <!--/. card-body-->

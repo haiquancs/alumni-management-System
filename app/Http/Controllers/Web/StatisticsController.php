@@ -21,7 +21,8 @@ class StatisticsController extends AppController
     public function index()
     {
         $infoAllListSurvey = User::getAllInfoListSurvey();
-        return view($this->dirView . 'index', compact('infoAllListSurvey'));
+        $getNewsDay = User::getNewsDay();
+        return view($this->dirView . 'index', compact('infoAllListSurvey', 'getNewsDay'));
     }
 
 
