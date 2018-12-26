@@ -33,7 +33,7 @@
                             </div>
                         @endif
                         <!-- form start -->
-                        <form action="{{ route('web.users.update', [$user->id]) }}" method="POST">
+                        <form action="{{ route('web.users.update', [$user->id]) }}" method="POST" enctype="multipart/form-data">
                             {{ csrf_field() }}
                             {{ method_field('PUT') }}
                             <div class="box-body">
@@ -91,6 +91,10 @@
                                             <option value="{{ $key+1 }}">{{$value['business']}}</option>
                                         @endforeach
                                     </select>
+                                </div>
+                                <div class="form-group row">
+                                    <label for="inputEmail3" class="col-2 col-form-label">Ảnh</label>
+                                    <input type="file" name="filesTest">
                                 </div>
                                 <div class="box-footer">
                                     <a class="btn btn-default" href="{{ route('web.surveys.index') }}">Trở lại</a>
